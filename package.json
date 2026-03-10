@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
- "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\""
-},
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\""
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/adapter-pg": "^7.4.2",
+    "@prisma/client": "^7.4.2",
     "concurrently": "^9.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.5"
   }
 }

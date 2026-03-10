@@ -1,6 +1,10 @@
 import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
+import authRoutes from "./routes/authRoutes"
+
+
+
 
 const app = express()
 
@@ -13,6 +17,14 @@ app.use(
     credentials: true
   })
 )
+
+
+
+app.use("/auth", authRoutes)
+
+
+
+
 
 app.get("/", (req, res) => {
   res.json({ message: "API running" })
