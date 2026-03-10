@@ -1,7 +1,6 @@
 {
   "name": "backend",
   "version": "1.0.0",
-
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "^7.4.2",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
