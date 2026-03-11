@@ -32,3 +32,88 @@ model RefreshToken {
 
   user User @relation(fields: [userId], references: [id])
 }
+
+model Product {
+  id                    Int       @id @default(autoincrement())
+  title                 String
+  description           String
+  price                 Float
+  discountPercentage    Float?
+  rating                Float?
+  stock                 Int
+  brand                 String?
+  sku                   String    @unique
+
+  weight                Float?
+  warrantyInformation   String?
+  shippingInformation   String?
+  availabilityStatus    String?
+  returnPolicy          String?
+  minimumOrderQuantity  Int?
+
+  tags                  String[]
+
+  thumbnail             String
+
+  categoryId            Int
+  category              Category  @relation(fields: [categoryId], references: [id])
+
+  images                ProductImage[]
+  reviews               Review[]
+
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([price])
+  @@index([brand])
+  @@index([categoryId])
+  @@index([title])
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  slug      String    @unique
+
+  products  Product[]
+}
+
+model ProductImage {
+  id        Int      @id @default(autoincrement())
+  url       String
+
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id            Int      @id @default(autoincrement())
+  rating        Int
+  comment       String
+  reviewerName  String
+
+  productId     Int
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt     DateTime @default(now())
+}
+
+
+model Carousel {
+  id        Int      @id @default(autoincrement())
+
+  title     String?
+  subtitle  String?
+
+  imageUrl  String
+
+  ctaText   String?
+  ctaLink   String?
+
+  position  Int      @default(0)
+
+  isActive  Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
