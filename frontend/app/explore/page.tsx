@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import axios from "axios";
+
 
 import Navbar from "@/components/navbar/Navbar";
 import HeroCarousel from "@/components/carousel/HeroCarousel";
@@ -15,7 +15,10 @@ import { Button } from "@/components/ui/button";
 
 import { buildParams } from "@/lib/utils/buildParams";
 
-const API = "http://localhost:5000";
+
+
+import { api } from "@/lib/api";
+
 
 interface Product {
   id: number;
@@ -95,13 +98,13 @@ export default function ExplorePage() {
   // ─────────────────────────
 
   useEffect(() => {
-    axios
-      .get(`${API}/carousel`)
+    api
+      .get(`/carousel`)
       .then((r) => setCarousel(r.data.data ?? r.data))
       .catch(() => {});
 
-    axios
-      .get(`${API}/products/filters`)
+    api
+      .get(`products/filters`)
       .then((r) => {
         const raw = r.data.data ?? r.data;
 
@@ -142,8 +145,8 @@ export default function ExplorePage() {
       filtersData,
     });
 
-    axios
-      .get(`${API}/products`, { params })
+    api
+      .get(`/products`, { params })
       .then((r) => {
         setProducts(r.data.data ?? r.data);
         setPagination(r.data.pagination ?? null);
@@ -176,8 +179,8 @@ export default function ExplorePage() {
       filtersData,
     });
 
-    axios
-      .get(`${API}/products`, { params })
+    api
+      .get(`/products`, { params })
       .then((r) => {
         setProducts((prev) => [...prev, ...(r.data.data ?? r.data)]);
         setPagination(r.data.pagination ?? null);

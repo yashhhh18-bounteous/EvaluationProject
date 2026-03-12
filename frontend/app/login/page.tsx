@@ -30,7 +30,7 @@ const handleLogin = async () => {
     {
       onSuccess: () => {
         toast.success("Login successful")
-        router.push("/")
+        window.location.href = "/explore"
       },
       onError: () => {
         toast.error("Invalid email or password")
