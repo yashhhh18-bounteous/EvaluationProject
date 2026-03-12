@@ -6,7 +6,14 @@ import { ShoppingBag, Search, Heart, ShoppingCart, Package, User } from "lucide-
 
 import { Input } from "@/components/ui/input"
 
+import { useCartStore } from "@/store/cartStore"
+import { useWishlistStore } from "@/store/wishlistStore"
+
 export default function Navbar({ search, setSearch }: { search: string; setSearch: (v: string) => void }) {
+
+  const cartCount = useCartStore((s) => s.cartCount)
+  const wishlistCount = useWishlistStore((s) => s.wishlistCount)
+
   return (
     <nav className="sticky top-0 z-50 bg-[#0a0a0f]/95 backdrop-blur-md border-b border-[#8a7f78]/10">
       <div className="flex items-center gap-4 px-6 py-3.5 max-w-[1600px] mx-auto">
@@ -40,8 +47,8 @@ export default function Navbar({ search, setSearch }: { search: string; setSearc
           {[
             { label: "Explore", href: "/explore", active: true },
             { label: "Orders", href: "/orders", icon: <Package size={15} /> },
-            { label: "Wishlist", href: "/wishlist", icon: <Heart size={15} /> },
-            { label: "Cart", href: "/cart", icon: <ShoppingCart size={15} /> },
+            { label: "Wishlist", href: "/wishlist", icon: <Heart size={15} />, count: wishlistCount },
+            { label: "Cart", href: "/cart", icon: <ShoppingCart size={15} />, count: cartCount },
           ].map((item) => (
             <Link
               key={item.label}
@@ -54,8 +61,15 @@ export default function Navbar({ search, setSearch }: { search: string; setSearc
             >
               {item.icon}
               {item.label}
+
+              {"count" in item && item.count !== undefined && item.count > 0 && (
+                <span className="ml-1 text-[10px] bg-[#c8622a] text-white px-1.5 py-[1px] rounded-full">
+                  {item.count}
+                </span>
+              )}
             </Link>
           ))}
+
           <div className="ml-2 h-8 w-8 rounded-full bg-[#c8622a]/20 border border-[#c8622a]/30 flex items-center justify-center text-[#c8622a]">
             <User size={14} />
           </div>
