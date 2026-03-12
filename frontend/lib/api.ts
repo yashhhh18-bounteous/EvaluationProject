@@ -1,16 +1,6 @@
+// api.ts
 import axios from "axios"
 
-let accessToken: string | null = null
-
-export const setAccessToken = (token: string | null) => {
-  accessToken = token
-}
-
-/*
-  Backend base URL
-  Local  -> .env.local
-  Prod   -> Vercel env variable
-*/
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 export const api = axios.create({
@@ -18,59 +8,49 @@ export const api = axios.create({
   withCredentials: true
 })
 
+// ← this is the key — shared refresh promise
+let refreshPromise: Promise<any> | null = null
 
-// Attach access token automatically
-api.interceptors.request.use((config) => {
-
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`
-  }
-
-  return config
-})
-
-
-// Handle refresh automatically
+// api.ts
 api.interceptors.response.use(
   (response) => response,
 
   async (error) => {
-
     const originalRequest = error.config
 
+    // don't retry these endpoints — just reject silently
+    if (
+      originalRequest.url?.includes("/auth/refresh") ||
+      originalRequest.url?.includes("/auth/me")  // ← ADD THIS
+    ) {
+      return Promise.reject(error)
+    }
+
     if (error.response?.status === 401 && !originalRequest._retry) {
-
-      console.log("Access token expired. Attempting refresh...")
-
       originalRequest._retry = true
 
       try {
+        if (!refreshPromise) {
+          refreshPromise = axios.post(
+            `${API_URL}/auth/refresh`,
+            {},
+            { withCredentials: true }
+          ).finally(() => {
+            refreshPromise = null
+          })
+        }
 
-        const res = await axios.post(
-          `${API_URL}/auth/refresh`,
-          {},
-          { withCredentials: true }
-        )
-
-        const newAccessToken = res.data.accessToken
-
-        console.log("Refresh success. New access token received.")
-
-        accessToken = newAccessToken
-
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
-
+        await refreshPromise
         return api(originalRequest)
 
       } catch (err) {
-
-        console.error("Refresh failed", err)
-
+        refreshPromise = null
         window.location.href = "/login"
-
+        return Promise.reject(err)
       }
     }
 
     return Promise.reject(error)
   }
 )
+export default api

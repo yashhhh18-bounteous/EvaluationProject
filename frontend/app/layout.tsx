@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "sonner"
+import { Toaster } from "sonner";
 
-import { Cormorant_Garamond, DM_Sans, Bebas_Neue } from "next/font/google"
-import QueryProvider from "./providers/query-provider"
+import { Cormorant_Garamond, DM_Sans, Bebas_Neue } from "next/font/google";
+import QueryProvider from "./providers/query-provider";
+import AuthInitializer from "./auth-initializer";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -49,13 +50,12 @@ export default function RootLayout({
       lang="en"
       className={`${cormorant.variable} ${dmSans.variable} ${bebas.variable}`}
     >
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 
         <QueryProvider>
+          <AuthInitializer />
           {children}
-          <Toaster position="top-right" richColors/>
+          <Toaster position="top-right" richColors />
         </QueryProvider>
 
       </body>

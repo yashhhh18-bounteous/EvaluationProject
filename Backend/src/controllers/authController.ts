@@ -46,7 +46,7 @@ export const register = async (req: Request, res: Response) => {
 
 
 
-export const login = async (req:Request, res:Response) => {
+export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body
 
@@ -55,17 +55,13 @@ export const login = async (req:Request, res:Response) => {
     })
 
     if (!user) {
-      return res.status(401).json({
-        message: "Invalid credentials"
-      })
+      return res.status(401).json({ message: "Invalid credentials" })
     }
 
     const valid = await comparePassword(password, user.passwordHash)
 
     if (!valid) {
-      return res.status(401).json({
-        message: "Invalid credentials"
-      })
+      return res.status(401).json({ message: "Invalid credentials" })
     }
 
     const accessToken = generateAccessToken(user.id)
@@ -81,17 +77,24 @@ export const login = async (req:Request, res:Response) => {
       }
     })
 
-   res.cookie("refreshToken", refreshToken, {
+    // ACCESS TOKEN COOKIE
+  const isProd = process.env.NODE_ENV === "production"
+
+res.cookie("accessToken", accessToken, {
   httpOnly: true,
-  secure: false, // true in production
-  sameSite: "lax",
-  path: "/",
+  secure: isProd,
+  sameSite: isProd ? "none" : "lax",
+  maxAge: 15 * 60 * 1000
+})
+
+res.cookie("refreshToken", refreshToken, {
+  httpOnly: true,
+  secure: isProd,
+  sameSite: isProd ? "none" : "lax",
   maxAge: 7 * 24 * 60 * 60 * 1000
 })
 
-    res.json({
-      accessToken
-    })
+    return res.json({ success: true })
 
   } catch (error) {
     console.error(error)
@@ -148,15 +151,22 @@ export const refresh = async (req: Request, res: Response) => {
       }
     })
 
-    res.cookie("refreshToken", newRefreshToken, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "lax"
-    })
+  // auth.controller.ts — refresh endpoint
+res.cookie("refreshToken", newRefreshToken, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // ← fix sameSite too
+  maxAge: 7 * 24 * 60 * 60 * 1000  // ← ADD THIS
+})
 
-    res.json({
-      accessToken: newAccessToken
-    })
+res.cookie("accessToken", newAccessToken, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // ← fix sameSite too
+  maxAge: 15 * 60 * 1000
+})
+
+    res.json({ success: true })
 
   } catch (error) {
     console.error(error)
@@ -186,6 +196,7 @@ export const logout = async (req: Request, res: Response) => {
   }
 
   res.clearCookie("refreshToken")
+res.clearCookie("accessToken")
 
   res.json({ message: "Logged out" })
 }

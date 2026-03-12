@@ -10,7 +10,8 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
-import { setAccessToken } from "@/lib/api"
+import { useAuthStore } from "@/store/authStore"
+
 
 // Add to your globals.css or layout.tsx:
 // import { Cormorant_Garamond, DM_Sans, Bebas_Neue } from "next/font/google"
@@ -24,23 +25,18 @@ export default function LoginPage() {
   const router = useRouter()
   const loginMutation = useLogin()
 
+// login page - handleLogin
 const handleLogin = async () => {
+  const loadUser = useAuthStore.getState().loadUser  // ← get it outside hook
 
   loginMutation.mutate(
     { email, password },
     {
-      onSuccess: (data) => {
-
-        // store access token in memory
-        setAccessToken(data.accessToken)
-
-        console.log("Access token stored")
-
+      onSuccess: async () => {
+        await loadUser()          // ← wait for user to be set in store
         toast.success("Login successful")
-
-        router.push("/explore")
+        router.push("/explore")  // ← THEN navigate
       },
-
       onError: () => {
         toast.error("Invalid email or password")
       }
