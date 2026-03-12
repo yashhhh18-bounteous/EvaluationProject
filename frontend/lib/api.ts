@@ -11,6 +11,11 @@ api.interceptors.response.use(
 
     const originalRequest = error.config
 
+    // stop infinite loop
+    if (originalRequest?.url?.includes("/auth/refresh")) {
+      return Promise.reject(error)
+    }
+
     if (error.response?.status === 401 && !originalRequest._retry) {
 
       originalRequest._retry = true
@@ -23,7 +28,10 @@ api.interceptors.response.use(
 
       } catch (refreshError) {
 
-        window.location.href = "/login"
+        // redirect only once
+        if (typeof window !== "undefined") {
+          window.location.href = "/login"
+        }
 
       }
 

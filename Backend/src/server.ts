@@ -2,6 +2,9 @@ import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import authRoutes from "./routes/authRoutes"
+import productRoutes from "./routes/productRoutes"
+import carouselRoutes from "./routes/carouselRoutes"
+
 
 
 
@@ -22,6 +25,8 @@ app.use(
 
 
 app.use("/auth", authRoutes)
+app.use("/products", productRoutes)
+app.use("/carousel", carouselRoutes)
 
 
 
