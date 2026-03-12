@@ -6,13 +6,20 @@ export const setAccessToken = (token: string | null) => {
   accessToken = token
 }
 
+/*
+  Backend base URL
+  Local  -> .env.local
+  Prod   -> Vercel env variable
+*/
+const API_URL = process.env.NEXT_PUBLIC_API_URL
+
 export const api = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: API_URL,
   withCredentials: true
 })
 
 
-// Attach access token
+// Attach access token automatically
 api.interceptors.request.use((config) => {
 
   if (accessToken) {
@@ -40,7 +47,7 @@ api.interceptors.response.use(
       try {
 
         const res = await axios.post(
-          "http://localhost:5000/auth/refresh",
+          `${API_URL}/auth/refresh`,
           {},
           { withCredentials: true }
         )

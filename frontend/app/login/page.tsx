@@ -107,7 +107,7 @@ const handleLogin = async () => {
           <div className="space-y-3.5">
             {[
               "Lightning fast product discovery",
-              "Secure checkout & order tracking",
+             
               "Personalized shopping experience",
               "Modern full-stack architecture",
             ].map((feat) => (
