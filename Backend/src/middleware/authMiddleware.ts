@@ -11,29 +11,20 @@ export const authMiddleware = (
   next: NextFunction
 ) => {
 
-  const authHeader = req.headers.authorization
+  const token = req.cookies.accessToken
 
-  if (!authHeader) {
-    return res.status(401).json({
-      message: "No token provided"
-    })
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" })
   }
 
-  const token = authHeader.split(" ")[1]
-
   try {
-    const payload = jwt.verify(
-      token,
-      process.env.JWT_SECRET!
-    ) as { userId: number }
+    const payload = jwt.verify(token, process.env.JWT_SECRET!) as any
 
     req.userId = payload.userId
 
     next()
 
-  } catch (error) {
-    return res.status(401).json({
-      message: "Invalid token"
-    })
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid token" })
   }
 }

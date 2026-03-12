@@ -18,6 +18,7 @@ import { buildParams } from "@/lib/utils/buildParams";
 
 
 import { api } from "@/lib/api";
+import { useAuthGuard } from "@/lib/useAuthGuard";
 
 
 interface Product {
@@ -60,6 +61,9 @@ interface FilterState {
 }
 
 export default function ExplorePage() {
+
+useAuthGuard()
+
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("");
@@ -83,6 +87,10 @@ export default function ExplorePage() {
   });
 
   const observerRef = useRef<HTMLDivElement>(null);
+
+
+
+
 
   // ─────────────────────────
   // Debounce Search
