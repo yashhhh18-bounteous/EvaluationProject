@@ -5,7 +5,8 @@ import authRoutes from "./routes/authRoutes"
 import productRoutes from "./routes/productRoutes"
 import carouselRoutes from "./routes/carouselRoutes"
 
-
+import cartRoutes from "./routes/cartRoutes"
+import wishlistRoutes from "./routes/wishlistRoutes"
 
 
 
@@ -27,6 +28,8 @@ app.use(
 app.use("/auth", authRoutes)
 app.use("/products", productRoutes)
 app.use("/carousel", carouselRoutes)
+app.use("/api/cart", cartRoutes)
+app.use("/api/wishlist", wishlistRoutes)
 
 
 

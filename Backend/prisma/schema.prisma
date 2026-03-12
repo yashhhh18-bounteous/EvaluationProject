@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
- 
 }
 
 datasource db {
@@ -14,11 +13,13 @@ datasource db {
 }
 
 model User {
-  id           Int       @id @default(autoincrement())
-  email        String    @unique
-  passwordHash String
-  name         String?
-  createdAt    DateTime  @default(now())
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  passwordHash  String
+  name          String?
+  createdAt     DateTime       @default(now())
+  cart          Cart?
+  wishlistItems WishlistItem[]
 
   refreshTokens RefreshToken[]
 }
@@ -34,35 +35,37 @@ model RefreshToken {
 }
 
 model Product {
-  id                    Int       @id @default(autoincrement())
-  title                 String
-  description           String
-  price                 Float
-  discountPercentage    Float?
-  rating                Float?
-  stock                 Int
-  brand                 String?
-  sku                   String    @unique
+  id                 Int     @id @default(autoincrement())
+  title              String
+  description        String
+  price              Float
+  discountPercentage Float?
+  rating             Float?
+  stock              Int
+  brand              String?
+  sku                String  @unique
 
-  weight                Float?
-  warrantyInformation   String?
-  shippingInformation   String?
-  availabilityStatus    String?
-  returnPolicy          String?
-  minimumOrderQuantity  Int?
+  weight               Float?
+  warrantyInformation  String?
+  shippingInformation  String?
+  availabilityStatus   String?
+  returnPolicy         String?
+  minimumOrderQuantity Int?
 
-  tags                  String[]
+  tags String[]
 
-  thumbnail             String
+  thumbnail String
 
-  categoryId            Int
-  category              Category  @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
 
-  images                ProductImage[]
-  reviews               Review[]
+  images  ProductImage[]
+  reviews Review[]
 
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  cartItems     CartItem[]
+  wishlistItems WishlistItem[]
 
   @@index([price])
   @@index([brand])
@@ -71,49 +74,90 @@ model Product {
 }
 
 model Category {
-  id        Int       @id @default(autoincrement())
-  name      String    @unique
-  slug      String    @unique
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  slug String @unique
 
-  products  Product[]
+  products Product[]
 }
 
 model ProductImage {
-  id        Int      @id @default(autoincrement())
-  url       String
+  id  Int    @id @default(autoincrement())
+  url String
 
   productId Int
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Review {
-  id            Int      @id @default(autoincrement())
-  rating        Int
-  comment       String
-  reviewerName  String
+  id           Int    @id @default(autoincrement())
+  rating       Int
+  comment      String
+  reviewerName String
 
-  productId     Int
-  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  createdAt     DateTime @default(now())
+  createdAt DateTime @default(now())
 }
 
-
 model Carousel {
-  id        Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  title     String?
-  subtitle  String?
+  title    String?
+  subtitle String?
 
-  imageUrl  String
+  imageUrl String
 
-  ctaText   String?
-  ctaLink   String?
+  ctaText String?
+  ctaLink String?
 
-  position  Int      @default(0)
+  position Int @default(0)
 
-  isActive  Boolean  @default(true)
+  isActive Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Cart {
+  id        Int      @id @default(autoincrement())
+
+  userId    Int      @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  items     CartItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CartItem {
+  id        Int     @id @default(autoincrement())
+
+  cartId    Int
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+
+  quantity  Int     @default(1)
+
+  createdAt DateTime @default(now())
+
+  @@unique([cartId, productId])
+}
+
+model WishlistItem {
+  id        Int     @id @default(autoincrement())
+
+  userId    Int
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
 }
