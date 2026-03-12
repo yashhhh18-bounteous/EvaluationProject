@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import { setAccessToken } from "@/lib/api"
 
 // Add to your globals.css or layout.tsx:
 // import { Cormorant_Garamond, DM_Sans, Bebas_Neue } from "next/font/google"
@@ -28,16 +29,23 @@ const handleLogin = async () => {
   loginMutation.mutate(
     { email, password },
     {
-      onSuccess: () => {
+      onSuccess: (data) => {
+
+        // store access token in memory
+        setAccessToken(data.accessToken)
+
+        console.log("Access token stored")
+
         toast.success("Login successful")
-        window.location.href = "/explore"
+
+        router.push("/explore")
       },
+
       onError: () => {
         toast.error("Invalid email or password")
       }
     }
   )
-
 }
   return (
     <div className="flex min-h-screen bg-[#0a0a0f] font-sans">

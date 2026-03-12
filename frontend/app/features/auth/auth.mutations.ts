@@ -9,8 +9,12 @@ export function useLogin() {
 
     mutationFn: loginUser,
 
-    onSuccess: () => {
+    onSuccess: (data) => {
+
+      // important: keep react-query user cache fresh
       queryClient.invalidateQueries({ queryKey: ["me"] })
+
+      return data
     }
 
   })
