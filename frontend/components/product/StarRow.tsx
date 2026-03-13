@@ -9,7 +9,7 @@ export default function StarRow({ rating, size = 14 }: { rating: number; size?: 
           size={size}
           className={
             s <= Math.round(rating)
-              ? "text-[#c8622a] fill-[#c8622a]"
+              ? "text-[#059669] fill-[#059669]"
               : "text-[#e8e3dd] fill-[#e8e3dd]"
           }
         />

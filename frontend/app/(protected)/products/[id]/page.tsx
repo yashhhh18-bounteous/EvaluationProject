@@ -174,37 +174,12 @@ export default function ProductDetailPage() {
               {product.description}
             </p>
 
-            {/* Add to Cart + Wishlist */}
-            <div className="flex gap-3">
-              <Button
-                onClick={handleAddToCart}
-                disabled={addingToCart}
-                className="flex-1 h-12 rounded-xl bg-[#0a0a0f] text-white
-                  hover:bg-[#c8622a] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#c8622a]/30
-                  transition-all duration-200 gap-2 disabled:opacity-60"
-              >
-                <ShoppingBag size={15} />
-                {addingToCart ? "Adding..." : "Add to Cart"}
-              </Button>
-
-              <Button
-                onClick={handleToggleWishlist}
-                variant="outline"
-                className={`h-12 w-12 rounded-xl flex-shrink-0 p-0 transition-all duration-200 ${
-                  isWishlisted
-                    ? "border-[#c8622a]/40 bg-[#c8622a]/5"
-                    : "border-[#e8e3dd] hover:border-[#c8622a]/40"
-                }`}
-              >
-                <Heart
-                  size={16}
-                  className={isWishlisted
-                    ? "fill-[#c8622a] stroke-[#c8622a]"
-                    : "stroke-[#8a7f78]"
-                  }
-                />
-              </Button>
-            </div>
+            {/* Add to Cart */}
+            <Button className="h-12 rounded-xl bg-[#0a0a0f] text-white w-full
+              hover:bg-[#059669] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#059669]/30
+              transition-all duration-200">
+              Add to Cart
+            </Button>
 
             {/* InfoPills */}
             <div className="grid grid-cols-2 gap-2.5">

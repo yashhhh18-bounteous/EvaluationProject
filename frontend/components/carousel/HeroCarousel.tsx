@@ -33,7 +33,7 @@ export default function HeroCarousel({ items }: { items: CarouselItem[] }) {
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col justify-center px-10 space-y-2">
-        <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#c8622a]">
+        <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#059669]">
           Featured
         </p>
         <h2
@@ -46,7 +46,7 @@ export default function HeroCarousel({ items }: { items: CarouselItem[] }) {
         <Link href={item.ctaLink}>
           <Button
             size="sm"
-            className="mt-2 rounded-lg bg-[#c8622a] text-white hover:bg-[#e8845a] border-0 text-xs font-medium tracking-wide transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#c8622a]/30 w-fit"
+            className="mt-2 rounded-lg bg-[#059669] text-white hover:bg-[#e8845a] border-0 text-xs font-medium tracking-wide transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#059669]/30 w-fit"
           >
             {item.ctaText}
             <ChevronRight size={13} className="ml-1" />
@@ -61,7 +61,7 @@ export default function HeroCarousel({ items }: { items: CarouselItem[] }) {
             key={i}
             onClick={() => setActive(i)}
             className={`h-1.5 rounded-full transition-all duration-300 ${
-              i === active ? "w-6 bg-[#c8622a]" : "w-1.5 bg-[#f5f0eb]/30"
+              i === active ? "w-6 bg-[#059669]" : "w-1.5 bg-[#f5f0eb]/30"
             }`}
           />
         ))}

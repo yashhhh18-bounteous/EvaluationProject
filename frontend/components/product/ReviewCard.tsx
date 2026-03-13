@@ -14,7 +14,7 @@ export default function ReviewCard({ review }: { review: Review }) {
     <div className="bg-white rounded-2xl p-5 border border-[#e8e3dd] space-y-3">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="h-9 w-9 rounded-full bg-[#c8622a]/10 border border-[#c8622a]/20 flex items-center justify-center text-[#c8622a]">
+          <div className="h-9 w-9 rounded-full bg-[#059669]/10 border border-[#059669]/20 flex items-center justify-center text-[#059669]">
             <User size={15} />
           </div>
           <div>
