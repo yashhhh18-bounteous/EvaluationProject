@@ -1,5 +1,6 @@
 "use client"
 
+import { Suspense } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { useVerifySession } from "../../features/orders/orders.mutation"
 import { useCartStore } from "@/store/cartStore"
@@ -9,7 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import Navbar from "@/components/navbar/Navbar"
 
-export default function OrderSuccessPage() {
+function OrderSuccessContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const sessionId = searchParams.get("session_id") ?? ""
@@ -18,7 +19,6 @@ export default function OrderSuccessPage() {
 
   const { data, isLoading, isError } = useVerifySession(sessionId)
 
-  // resync cart after successful payment
   useEffect(() => {
     if (data?.order) {
       fetchCart()
@@ -161,5 +161,13 @@ export default function OrderSuccessPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function OrderSuccessPage() {
+  return (
+    <Suspense>
+      <OrderSuccessContent />
+    </Suspense>
   )
 }
