@@ -175,28 +175,29 @@ res.cookie("accessToken", newAccessToken, {
 }
 
 
-export const logout = async (req: Request, res: Response) => {
-
+export const logout = async (req: AuthRequest, res: Response) => {
   const token = req.cookies.refreshToken
 
   if (token) {
-
     const tokens = await prisma.refreshToken.findMany()
-
     for (const t of tokens) {
       const valid = await bcrypt.compare(token, t.tokenHash)
-
       if (valid) {
-        await prisma.refreshToken.delete({
-          where: { id: t.id }
-        })
+        await prisma.refreshToken.delete({ where: { id: t.id } })
       }
     }
-
   }
 
-  res.clearCookie("refreshToken")
-res.clearCookie("accessToken")
+  const isProd = process.env.NODE_ENV === "production"
+
+  const cookieOptions = {
+    httpOnly: true,
+    secure: isProd,
+    sameSite: isProd ? "none" as const : "lax" as const,
+  }
+
+  res.clearCookie("accessToken", cookieOptions)
+  res.clearCookie("refreshToken", cookieOptions)
 
   res.json({ message: "Logged out" })
 }
