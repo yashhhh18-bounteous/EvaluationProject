@@ -25,7 +25,7 @@ const discounted = product.discountPercentage
   : null
 
   return (
-    <div className="group bg-white rounded-2xl overflow-hidden border border-[#e8e3dd] hover:border-[#c8622a]/30 hover:shadow-xl hover:shadow-[#c8622a]/8 transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom-2">
+    <div className="group bg-white rounded-2xl overflow-hidden border border-[#e8e3dd] hover:border-[#059669]/30 hover:shadow-xl hover:shadow-[#059669]/8 transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom-2">
 
       {/* Image */}
       <div className="relative aspect-square bg-[#faf7f3] overflow-hidden">
@@ -40,16 +40,16 @@ const discounted = product.discountPercentage
         {/* Remove from wishlist */}
         <button
           onClick={() => toggleWishlist(productId)}
-          className="absolute top-3 right-3 z-10 h-8 w-8 rounded-full bg-[#c8622a] text-white
-            flex items-center justify-center shadow-lg shadow-[#c8622a]/30
+          className="absolute top-3 right-3 z-10 h-8 w-8 rounded-full bg-[#059669] text-white
+            flex items-center justify-center shadow-lg shadow-[#059669]/30
             hover:bg-red-500 active:scale-75 transition-all duration-200"
         >
-          <Heart size={14} fill="#c8622a" stroke="white" />
+          <Heart size={14} fill="#059669" stroke="white" />
         </button>
 
         {/* Discount badge */}
         {product.discountPercentage && product.discountPercentage > 5 && (
-          <div className="absolute top-3 left-3 bg-[#c8622a] text-white text-[10px] font-medium px-2 py-0.5 rounded-full">
+          <div className="absolute top-3 left-3 bg-[#059669] text-white text-[10px] font-medium px-2 py-0.5 rounded-full">
             -{Math.round(product.discountPercentage)}%
           </div>
         )}
@@ -57,13 +57,13 @@ const discounted = product.discountPercentage
 
       {/* Info */}
       <div className="p-4 space-y-2">
-        <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-[#c8622a]/70">
+        <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-[#059669]/70">
           {product.brand}
         </p>
 
         <Link href={`/products/${productId}`}>
           <h3
-            className="text-[15px] font-light text-[#0a0a0f] leading-snug line-clamp-2 hover:text-[#c8622a] transition-colors duration-200"
+            className="text-[15px] font-light text-[#0a0a0f] leading-snug line-clamp-2 hover:text-[#059669] transition-colors duration-200"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
             {product.title}
@@ -80,7 +80,7 @@ const discounted = product.discountPercentage
                   size={11}
                   className={
                     s <= Math.round(product.rating)
-                      ? "text-[#c8622a] fill-[#c8622a]"
+                      ? "text-[#059669] fill-[#059669]"
                       : "text-[#e8e3dd] fill-[#e8e3dd]"
                   }
                 />
@@ -111,7 +111,7 @@ const discounted = product.discountPercentage
           <button
             onClick={() => addToCart(productId)}
             className="h-8 w-8 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] flex items-center justify-center
-              hover:bg-[#c8622a] active:scale-90 transition-all duration-200"
+              hover:bg-[#059669] active:scale-90 transition-all duration-200"
           >
             <ShoppingCart size={13} />
           </button>
@@ -149,7 +149,7 @@ export default function WishlistPage() {
         {/* Header */}
         <div className="mb-8 flex items-end justify-between">
           <div>
-            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#c8622a] mb-1">
+            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#059669] mb-1">
               Your
             </p>
             <h1
@@ -186,7 +186,7 @@ export default function WishlistPage() {
             </div>
             <Link href="/explore">
               <Button className="h-11 px-8 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm font-medium
-                hover:bg-[#c8622a] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#c8622a]/30 transition-all duration-200">
+                hover:bg-[#059669] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#059669]/30 transition-all duration-200">
                 Start Exploring
               </Button>
             </Link>

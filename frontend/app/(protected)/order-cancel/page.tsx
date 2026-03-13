@@ -21,7 +21,7 @@ function OrderCancelContent() {
           <XCircle size={36} className="text-red-400" />
         </div>
         <div>
-          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#c8622a] mb-1">
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#059669] mb-1">
             Payment Cancelled
           </p>
           <h1 className="text-[clamp(28px,4vw,44px)] font-light text-[#0a0a0f]"
@@ -38,7 +38,7 @@ function OrderCancelContent() {
         <div className="flex gap-3 justify-center">
           <Button
             onClick={() => router.push("/checkout")}
-            className="h-11 px-6 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm hover:bg-[#c8622a] transition-all gap-2"
+            className="h-11 px-6 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm hover:bg-[#059669] transition-all gap-2"
           >
             <ArrowLeft size={15} />
             Try Again

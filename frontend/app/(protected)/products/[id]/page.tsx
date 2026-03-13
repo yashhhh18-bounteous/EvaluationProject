@@ -141,7 +141,7 @@ export default function ProductDetailPage() {
 
             {/* Add to Cart */}
             <Button className="h-12 rounded-xl bg-[#0a0a0f] text-white w-full
-              hover:bg-[#c8622a] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#c8622a]/30
+              hover:bg-[#059669] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#059669]/30
               transition-all duration-200">
               Add to Cart
             </Button>

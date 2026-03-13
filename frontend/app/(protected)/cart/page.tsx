@@ -40,7 +40,7 @@ const discounted = product.discountPercentage
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-[#e8e3dd] p-5 flex gap-5 items-start group hover:border-[#c8622a]/20 hover:shadow-md hover:shadow-[#c8622a]/5 transition-all duration-300">
+    <div className="bg-white rounded-2xl border border-[#e8e3dd] p-5 flex gap-5 items-start group hover:border-[#059669]/20 hover:shadow-md hover:shadow-[#059669]/5 transition-all duration-300">
 
       {/* Thumbnail */}
       <Link href={`/products/${item.productId}`} className="flex-shrink-0">
@@ -55,12 +55,12 @@ const discounted = product.discountPercentage
 
       {/* Info */}
       <div className="flex-1 min-w-0 space-y-1.5">
-        <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-[#c8622a]/70">
+        <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-[#059669]/70">
           {product.brand}
         </p>
         <Link href={`/products/${item.productId}`}>
           <h3
-            className="text-[15px] font-light text-[#0a0a0f] leading-snug hover:text-[#c8622a] transition-colors line-clamp-2"
+            className="text-[15px] font-light text-[#0a0a0f] leading-snug hover:text-[#059669] transition-colors line-clamp-2"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
             {product.title}
@@ -115,13 +115,13 @@ const discounted = product.discountPercentage
             onClick={handleMoveToWishlist}
             className={`flex items-center gap-1.5 text-xs font-light transition-colors ${
               wished
-                ? "text-[#c8622a]"
-                : "text-[#8a7f78] hover:text-[#c8622a]"
+                ? "text-[#059669]"
+                : "text-[#8a7f78] hover:text-[#059669]"
             }`}
           >
             <Heart
               size={13}
-              fill={wished ? "#c8622a" : "none"}
+              fill={wished ? "#059669" : "none"}
               stroke={wished ? "white" : "currentColor"}
               className={wished ? "drop-shadow-sm" : ""}
             />
@@ -183,7 +183,7 @@ function CartSummary({ items }: { items: any[] }) {
     <div className="bg-white rounded-2xl border border-[#e8e3dd] p-6 space-y-4 sticky top-24">
 
       <div>
-        <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#c8622a] mb-1">
+        <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#059669] mb-1">
           Summary
         </p>
         <h2
@@ -237,7 +237,7 @@ function CartSummary({ items }: { items: any[] }) {
  <Button
   onClick={() => router.push("/checkout")}
   className="w-full h-12 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm font-medium tracking-wide
-    hover:bg-[#c8622a] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#c8622a]/30
+    hover:bg-[#059669] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#059669]/30
     active:translate-y-0 transition-all duration-200 group gap-2"
 >
   Proceed to Checkout
@@ -269,7 +269,7 @@ export default function CartPage() {
 
         {/* Header */}
         <div className="mb-8">
-          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#c8622a] mb-1">
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#059669] mb-1">
             Your
           </p>
           <h1
@@ -299,7 +299,7 @@ export default function CartPage() {
             </div>
             <Link href="/explore">
               <Button className="h-11 px-8 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm font-medium
-                hover:bg-[#c8622a] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#c8622a]/30 transition-all duration-200">
+                hover:bg-[#059669] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#059669]/30 transition-all duration-200">
                 Start Exploring
               </Button>
             </Link>

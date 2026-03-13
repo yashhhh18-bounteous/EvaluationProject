@@ -50,7 +50,7 @@ export default function FiltersSidebar({
         </span>
         <button
           onClick={onReset}
-          className="text-[11px] text-[#c8622a] hover:underline underline-offset-4 font-light transition-all"
+          className="text-[11px] text-[#059669] hover:underline underline-offset-4 font-light transition-all"
         >
           Reset all
         </button>
@@ -62,7 +62,7 @@ export default function FiltersSidebar({
       <div className="space-y-2.5">
         <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#0a0a0f]/50">Sort by</p>
         <Select value={filters.sort} onValueChange={(v) => setFilters({ ...filters, sort: v })}>
-          <SelectTrigger className="h-9 rounded-xl border-[#e8e3dd] bg-[#faf7f3] text-sm font-light text-[#0a0a0f] focus:ring-[#c8622a]/20 focus:border-[#c8622a]">
+          <SelectTrigger className="h-9 rounded-xl border-[#e8e3dd] bg-[#faf7f3] text-sm font-light text-[#0a0a0f] focus:ring-[#059669]/20 focus:border-[#059669]">
             <SelectValue />
           </SelectTrigger>
           <SelectContent className="rounded-xl border-[#e8e3dd]">
@@ -96,7 +96,7 @@ export default function FiltersSidebar({
           step={10}
           value={filters.priceRange}
           onValueChange={(v) => setFilters({ ...filters, priceRange: v as [number, number] })}
-          className="[&>span:first-child]:bg-[#e8e3dd] [&_[role=slider]]:bg-[#c8622a] [&_[role=slider]]:border-[#c8622a] [&>span:first-child>span]:bg-[#c8622a]"
+          className="[&>span:first-child]:bg-[#e8e3dd] [&_[role=slider]]:bg-[#059669] [&_[role=slider]]:border-[#059669] [&>span:first-child>span]:bg-[#059669]"
         />
         <div className="flex justify-between text-[10px] text-[#8a7f78] font-light">
           <span>${Math.floor(filtersData.priceRange.min)}</span>
@@ -116,8 +116,8 @@ export default function FiltersSidebar({
               onClick={() => setFilters({ ...filters, rating: filters.rating === r ? 0 : r })}
               className={`flex-1 py-1.5 rounded-lg text-xs font-light border transition-all ${
                 filters.rating === r
-                  ? "bg-[#c8622a] text-white border-[#c8622a]"
-                  : "border-[#e8e3dd] text-[#8a7f78] hover:border-[#c8622a]/40"
+                  ? "bg-[#059669] text-white border-[#059669]"
+                  : "border-[#e8e3dd] text-[#8a7f78] hover:border-[#059669]/40"
               }`}
             >
               {r}★
@@ -138,7 +138,7 @@ export default function FiltersSidebar({
                 id={brand}
                 checked={filters.brands.includes(brand)}
                 onCheckedChange={() => toggleBrand(brand)}
-                className="border-[#e8e3dd] data-[state=checked]:bg-[#c8622a] data-[state=checked]:border-[#c8622a] rounded-md h-4 w-4"
+                className="border-[#e8e3dd] data-[state=checked]:bg-[#059669] data-[state=checked]:border-[#059669] rounded-md h-4 w-4"
               />
               <Label
                 htmlFor={brand}

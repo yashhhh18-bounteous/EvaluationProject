@@ -25,7 +25,7 @@ export default function ProductCard({ product, index }: { product: Product; inde
 
   return (
     <div
-      className="group relative bg-white rounded-2xl overflow-hidden border border-[#e8e3dd] hover:border-[#c8622a]/30 hover:shadow-xl hover:shadow-[#c8622a]/8 transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom-2"
+      className="group relative bg-white rounded-2xl overflow-hidden border border-[#e8e3dd] hover:border-[#059669]/30 hover:shadow-xl hover:shadow-[#059669]/8 transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom-2"
       style={{ animationDelay: `${(index % 12) * 40}ms` }}
     >
       {/* Image */}
@@ -52,8 +52,8 @@ export default function ProductCard({ product, index }: { product: Product; inde
             "transition-all duration-200 active:scale-75",
             // color — wished vs not wished
             wished
-              ? "bg-[#c8622a] text-white shadow-lg shadow-[#c8622a]/30"
-              : "bg-white/80 text-[#8a7f78] hover:bg-white hover:text-[#c8622a]",
+              ? "bg-[#059669] text-white shadow-lg shadow-[#059669]/30"
+              : "bg-white/80 text-[#8a7f78] hover:bg-white hover:text-[#059669]",
             // visibility — kept separate so Tailwind doesn't conflict
             wished
               ? "opacity-100 scale-100"
@@ -69,7 +69,7 @@ export default function ProductCard({ product, index }: { product: Product; inde
 
         {/* Discount badge */}
         {product.discountPercentage && product.discountPercentage > 5 && (
-          <div className="absolute top-3 left-3 bg-[#c8622a] text-white text-[10px] font-medium px-2 py-0.5 rounded-full">
+          <div className="absolute top-3 left-3 bg-[#059669] text-white text-[10px] font-medium px-2 py-0.5 rounded-full">
             -{Math.round(product.discountPercentage)}%
           </div>
         )}
@@ -77,13 +77,13 @@ export default function ProductCard({ product, index }: { product: Product; inde
 
       {/* Info */}
       <div className="p-4 space-y-2">
-        <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-[#c8622a]/70">
+        <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-[#059669]/70">
           {product.brand}
         </p>
 
         <Link href={`/products/${product.id}`}>
           <h3
-            className="text-[15px] font-light text-[#0a0a0f] leading-snug line-clamp-2 hover:text-[#c8622a] transition-colors duration-200"
+            className="text-[15px] font-light text-[#0a0a0f] leading-snug line-clamp-2 hover:text-[#059669] transition-colors duration-200"
             style={{ fontFamily: "'Cormorant Garamond', serif" }}
           >
             {product.title}
@@ -99,7 +99,7 @@ export default function ProductCard({ product, index }: { product: Product; inde
                 size={11}
                 className={
                   s <= Math.round(product.rating)
-                    ? "text-[#c8622a] fill-[#c8622a]"
+                    ? "text-[#059669] fill-[#059669]"
                     : "text-[#e8e3dd] fill-[#e8e3dd]"
                 }
               />
@@ -133,7 +133,7 @@ export default function ProductCard({ product, index }: { product: Product; inde
               addToCart(product.id)
             }}
             className="h-8 w-8 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] flex items-center justify-center
-              hover:bg-[#c8622a] active:scale-90 transition-all duration-200"
+              hover:bg-[#059669] active:scale-90 transition-all duration-200"
           >
             <ShoppingCart size={13} />
           </button>

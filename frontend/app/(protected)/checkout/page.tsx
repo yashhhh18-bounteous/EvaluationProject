@@ -134,7 +134,7 @@ export default function CheckoutPage() {
           </p>
           <Button
             onClick={() => router.push("/explore")}
-            className="h-11 px-8 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm hover:bg-[#c8622a] transition-all"
+            className="h-11 px-8 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm hover:bg-[#059669] transition-all"
           >
             Start Exploring
           </Button>
@@ -160,7 +160,7 @@ export default function CheckoutPage() {
 
         {/* Header */}
         <div>
-          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#c8622a] mb-1">
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#059669] mb-1">
             Almost there
           </p>
           <h1 className="text-[clamp(28px,4vw,48px)] font-light text-[#0a0a0f]"
@@ -181,7 +181,7 @@ export default function CheckoutPage() {
                 </h2>
                 <button
                   onClick={() => setShowAddressForm((v) => !v)}
-                  className="flex items-center gap-1.5 text-xs text-[#c8622a] hover:text-[#c8622a]/80 transition-colors"
+                  className="flex items-center gap-1.5 text-xs text-[#059669] hover:text-[#059669]/80 transition-colors"
                 >
                   <Plus size={13} />
                   Add New
@@ -248,7 +248,7 @@ export default function CheckoutPage() {
                     <input type="checkbox" id="isDefault"
                       checked={addressForm.isDefault}
                       onChange={(e) => setAddressForm((f) => ({ ...f, isDefault: e.target.checked }))}
-                      className="accent-[#c8622a]" />
+                      className="accent-[#059669]" />
                     <label htmlFor="isDefault" className="text-xs text-[#8a7f78]">
                       Set as default address
                     </label>
@@ -281,14 +281,14 @@ export default function CheckoutPage() {
                     onClick={() => setSelectedAddressId(addr.id)}
                     className={`relative rounded-xl border p-4 text-sm cursor-pointer transition-all duration-200 ${
                       selectedAddressId === addr.id
-                        ? "border-[#c8622a] bg-[#c8622a]/5 shadow-sm shadow-[#c8622a]/10"
-                        : "border-[#e8e3dd] bg-[#faf7f3] hover:border-[#c8622a]/30"
+                        ? "border-[#059669] bg-[#059669]/5 shadow-sm shadow-[#059669]/10"
+                        : "border-[#e8e3dd] bg-[#faf7f3] hover:border-[#059669]/30"
                     }`}
                   >
                     {/* Selected indicator */}
                     <div className={`absolute top-4 right-4 h-4 w-4 rounded-full border-2 flex items-center justify-center transition-all ${
                       selectedAddressId === addr.id
-                        ? "border-[#c8622a] bg-[#c8622a]"
+                        ? "border-[#059669] bg-[#059669]"
                         : "border-[#e8e3dd] bg-white"
                     }`}>
                       {selectedAddressId === addr.id && (
@@ -297,14 +297,14 @@ export default function CheckoutPage() {
                     </div>
 
                     {addr.isDefault && (
-                      <span className="inline-flex items-center gap-1 text-[10px] text-[#c8622a] font-medium mb-1.5">
-                        <Star size={10} fill="#c8622a" />
+                      <span className="inline-flex items-center gap-1 text-[10px] text-[#059669] font-medium mb-1.5">
+                        <Star size={10} fill="#059669" />
                         Default
                       </span>
                     )}
 
                     <div className="flex items-start gap-2.5 pr-8">
-                      <MapPin size={14} className="text-[#c8622a] mt-0.5 flex-shrink-0" />
+                      <MapPin size={14} className="text-[#059669] mt-0.5 flex-shrink-0" />
                       <div className="space-y-0.5">
                         {addr.label && (
                           <p className="font-medium text-[#0a0a0f]">{addr.label}</p>
@@ -359,7 +359,7 @@ export default function CheckoutPage() {
           {/* Right — Summary */}
           <div className="bg-white rounded-2xl border border-[#e8e3dd] p-6 space-y-5 sticky top-24">
             <div>
-              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#c8622a] mb-1">
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#059669] mb-1">
                 Summary
               </p>
               <h2 className="text-2xl font-light text-[#0a0a0f]"
@@ -406,7 +406,7 @@ export default function CheckoutPage() {
 
             {/* Delivery info */}
             <div className="flex items-center gap-2 text-xs text-[#8a7f78] bg-[#faf7f3] rounded-xl px-3 py-2.5">
-              <Truck size={13} className="text-[#c8622a] flex-shrink-0" />
+              <Truck size={13} className="text-[#059669] flex-shrink-0" />
               Estimated delivery in 3–5 business days
             </div>
 
@@ -414,7 +414,7 @@ export default function CheckoutPage() {
   onClick={handlePlaceOrder}
   disabled={checkoutMutation.isPending || !selectedAddressId}
   className="w-full h-12 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm font-medium tracking-wide
-    hover:bg-[#c8622a] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#c8622a]/30
+    hover:bg-[#059669] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#059669]/30
     active:translate-y-0 transition-all duration-200 group gap-2 disabled:opacity-50"
 >
   {checkoutMutation.isPending ? (

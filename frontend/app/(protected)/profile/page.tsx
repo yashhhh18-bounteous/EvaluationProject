@@ -131,7 +131,7 @@ export default function ProfilePage() {
 
         {/* Avatar + name header */}
         <div className="flex items-center gap-4">
-          <div className="h-16 w-16 rounded-full bg-[#c8622a]/15 border-2 border-[#c8622a]/30 flex items-center justify-center text-[#c8622a] text-xl font-medium">
+          <div className="h-16 w-16 rounded-full bg-[#059669]/15 border-2 border-[#059669]/30 flex items-center justify-center text-[#059669] text-xl font-medium">
             {getInitials(user?.name, user?.email)}
           </div>
           <div>
@@ -161,7 +161,7 @@ export default function ProfilePage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Your name"
-                  className="pl-10 h-11 rounded-xl border-[#e8e3dd] bg-[#faf7f3] text-[#0a0a0f] text-sm focus-visible:border-[#c8622a]/60 focus-visible:ring-[#c8622a]/10"
+                  className="pl-10 h-11 rounded-xl border-[#e8e3dd] bg-[#faf7f3] text-[#0a0a0f] text-sm focus-visible:border-[#059669]/60 focus-visible:ring-[#059669]/10"
                 />
               </div>
             </div>
@@ -188,7 +188,7 @@ export default function ProfilePage() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="Your phone number"
-                  className="pl-10 h-11 rounded-xl border-[#e8e3dd] bg-[#faf7f3] text-[#0a0a0f] text-sm focus-visible:border-[#c8622a]/60 focus-visible:ring-[#c8622a]/10"
+                  className="pl-10 h-11 rounded-xl border-[#e8e3dd] bg-[#faf7f3] text-[#0a0a0f] text-sm focus-visible:border-[#059669]/60 focus-visible:ring-[#059669]/10"
                 />
               </div>
             </div>
@@ -211,7 +211,7 @@ export default function ProfilePage() {
             </h2>
             <button
               onClick={() => setShowAddressForm((v) => !v)}
-              className="flex items-center gap-1.5 text-xs text-[#c8622a] hover:text-[#c8622a]/80 transition-colors"
+              className="flex items-center gap-1.5 text-xs text-[#059669] hover:text-[#059669]/80 transition-colors"
             >
               <Plus size={13} />
               Add New
@@ -298,7 +298,7 @@ export default function ProfilePage() {
                   id="isDefault"
                   checked={addressForm.isDefault}
                   onChange={(e) => setAddressForm((f) => ({ ...f, isDefault: e.target.checked }))}
-                  className="accent-[#c8622a]"
+                  className="accent-[#059669]"
                 />
                 <label htmlFor="isDefault" className="text-xs text-[#8a7f78]">
                   Set as default address
@@ -337,14 +337,14 @@ export default function ProfilePage() {
                 key={addr.id}
                 className={`relative rounded-xl border p-4 text-sm ${
                   addr.isDefault
-                    ? "border-[#c8622a]/40 bg-[#c8622a]/5"
+                    ? "border-[#059669]/40 bg-[#059669]/5"
                     : "border-[#e8e3dd] bg-[#faf7f3]"
                 }`}
               >
                 {/* Default badge */}
                 {addr.isDefault && (
-                  <span className="absolute top-3 right-10 flex items-center gap-1 text-[10px] text-[#c8622a] font-medium">
-                    <Star size={10} fill="#c8622a" />
+                  <span className="absolute top-3 right-10 flex items-center gap-1 text-[10px] text-[#059669] font-medium">
+                    <Star size={10} fill="#059669" />
                     Default
                   </span>
                 )}
@@ -358,7 +358,7 @@ export default function ProfilePage() {
                 </button>
 
                 <div className="flex items-start gap-2.5">
-                  <MapPin size={14} className="text-[#c8622a] mt-0.5 flex-shrink-0" />
+                  <MapPin size={14} className="text-[#059669] mt-0.5 flex-shrink-0" />
                   <div className="space-y-0.5 pr-16">
                     {addr.label && (
                       <p className="font-medium text-[#0a0a0f]">{addr.label}</p>

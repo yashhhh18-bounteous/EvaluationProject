@@ -30,7 +30,7 @@ function OrderSuccessContent() {
       <div className="min-h-screen bg-[#faf7f3] flex items-center justify-center"
         style={{ fontFamily: "'DM Sans', sans-serif" }}>
         <div className="flex flex-col items-center gap-3">
-          <Loader2 size={24} className="animate-spin text-[#c8622a]" />
+          <Loader2 size={24} className="animate-spin text-[#059669]" />
           <p className="text-sm text-[#8a7f78]">Confirming your order...</p>
         </div>
       </div>
@@ -44,7 +44,7 @@ function OrderSuccessContent() {
         <div className="text-center space-y-4">
           <p className="text-lg text-[#0a0a0f]">Something went wrong verifying your order.</p>
           <Button onClick={() => router.push("/orders")}
-            className="h-11 px-8 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm hover:bg-[#c8622a] transition-all">
+            className="h-11 px-8 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm hover:bg-[#059669] transition-all">
             View Orders
           </Button>
         </div>
@@ -66,7 +66,7 @@ function OrderSuccessContent() {
             <CheckCircle2 size={36} className="text-emerald-500" />
           </div>
           <div>
-            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#c8622a] mb-1">
+            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#059669] mb-1">
               Payment Successful
             </p>
             <h1 className="text-[clamp(28px,4vw,44px)] font-light text-[#0a0a0f]"
@@ -84,7 +84,7 @@ function OrderSuccessContent() {
 
           {/* Address */}
           <div className="flex items-start gap-2.5">
-            <MapPin size={15} className="text-[#c8622a] mt-0.5 flex-shrink-0" />
+            <MapPin size={15} className="text-[#059669] mt-0.5 flex-shrink-0" />
             <div className="space-y-0.5">
               <p className="text-xs font-medium text-[#0a0a0f] uppercase tracking-wide">
                 Delivering to
@@ -145,7 +145,7 @@ function OrderSuccessContent() {
         <div className="flex gap-3">
           <Button
             onClick={() => router.push("/orders")}
-            className="flex-1 h-11 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm hover:bg-[#c8622a] transition-all gap-2 group"
+            className="flex-1 h-11 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm hover:bg-[#059669] transition-all gap-2 group"
           >
             <Package size={15} />
             View Orders
