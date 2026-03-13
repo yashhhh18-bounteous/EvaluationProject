@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react"
-import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { CarouselItem } from "@/types/product"
-
 
 export default function HeroCarousel({ items }: { items: CarouselItem[] }) {
   const [active, setActive] = useState(0)
@@ -22,14 +20,16 @@ export default function HeroCarousel({ items }: { items: CarouselItem[] }) {
 
   return (
     <div className="relative h-52 rounded-2xl overflow-hidden group">
+
       {/* BG image */}
       <div
         className="absolute inset-0 bg-cover bg-center transition-all duration-700"
         style={{ backgroundImage: `url(${item.imageUrl})` }}
       />
+
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0f]/90 via-[#0a0a0f]/50 to-transparent" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_0%_50%,rgba(200,98,42,0.15)_0%,transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_0%_50%,rgba(5,150,105,0.15)_0%,transparent_70%)]" />
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col justify-center px-10 space-y-2">
@@ -43,15 +43,14 @@ export default function HeroCarousel({ items }: { items: CarouselItem[] }) {
           {item.title}
         </h2>
         <p className="text-sm font-light text-[#8a7f78]">{item.subtitle}</p>
-        <Link href={item.ctaLink}>
-          <Button
-            size="sm"
-            className="mt-2 rounded-lg bg-[#059669] text-white hover:bg-[#e8845a] border-0 text-xs font-medium tracking-wide transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#059669]/30 w-fit"
-          >
-            {item.ctaText}
-            <ChevronRight size={13} className="ml-1" />
-          </Button>
-        </Link>
+
+        <Button
+          size="sm"
+          className="mt-2 rounded-lg bg-[#059669] text-white border-0 text-xs font-medium tracking-wide w-fit cursor-default pointer-events-none"
+        >
+          {item.ctaText}
+          <ChevronRight size={13} className="ml-1" />
+        </Button>
       </div>
 
       {/* Dots */}
@@ -66,6 +65,7 @@ export default function HeroCarousel({ items }: { items: CarouselItem[] }) {
           />
         ))}
       </div>
+
     </div>
   )
 }
