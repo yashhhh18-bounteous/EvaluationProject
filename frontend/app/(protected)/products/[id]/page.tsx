@@ -80,20 +80,7 @@ export default function ProductDetailPage() {
     <div className="min-h-screen bg-[#faf7f3]">
 
       {/* Navbar */}
-      <nav className="sticky top-0 z-50 bg-[#0a0a0f]/95 backdrop-blur-md border-b border-[#8a7f78]/10">
-        <div className="flex items-center gap-4 px-6 py-3.5 max-w-[1200px] mx-auto">
-
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#c8622a]/60 text-[#c8622a]">
-              <ShoppingBag size={15} />
-            </div>
-            <span className="text-xl tracking-[0.14em] text-[#f5f0eb]">
-              Yash<span className="text-[#c8622a]">Cart</span>
-            </span>
-          </Link>
-
-        </div>
-      </nav>
+    <Navbar />
 
       <div className="max-w-[1200px] mx-auto px-6 py-10 space-y-16">
 

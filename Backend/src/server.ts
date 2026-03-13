@@ -7,6 +7,7 @@ import carouselRoutes from "./routes/carouselRoutes"
 
 import cartRoutes from "./routes/cartRoutes"
 import wishlistRoutes from "./routes/wishlistRoutes"
+import orderRoutes from "./routes/orderRoutes"
 
 
 
@@ -30,7 +31,7 @@ app.use("/products", productRoutes)
 app.use("/carousel", carouselRoutes)
 app.use("/api/cart", cartRoutes)
 app.use("/api/wishlist", wishlistRoutes)
-
+app.use("/api/orders", orderRoutes)
 
 
 

@@ -6,56 +6,12 @@ import { useCartStore } from "@/store/cartStore"
 import { useWishlistStore } from "@/store/wishlistStore"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import { useRouter } from "next/navigation"
+import Navbar from "@/components/navbar/Navbar"
 
 // ─── Navbar ───────────────────────────────────────────────────────────────────
 
-function Navbar() {
-  const cartCount = useCartStore((s) => s.cartCount)
-  const wishlistCount = useWishlistStore((s) => s.wishlistCount)
 
-  return (
-    <nav className="sticky top-0 z-50 bg-[#0a0a0f]/95 backdrop-blur-md border-b border-[#8a7f78]/10">
-      <div className="flex items-center gap-4 px-6 py-3.5 max-w-[1200px] mx-auto">
-        <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#c8622a]/60 text-[#c8622a]">
-            <ShoppingBag size={15} />
-          </div>
-          <span
-            className="text-xl tracking-[0.14em] text-[#f5f0eb]"
-            style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-          >
-            Yash<span className="text-[#c8622a]">Cart</span>
-          </span>
-        </Link>
-
-        <div className="ml-auto flex items-center gap-1">
-          {[
-            { label: "Explore", href: "/explore" },
-            { label: "Wishlist", href: "/wishlist", count: wishlistCount },
-            { label: "Cart", href: "/cart", count: cartCount, active: true },
-          ].map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className={`relative flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-light transition-colors ${
-                item.active
-                  ? "text-[#c8622a] bg-[#c8622a]/10"
-                  : "text-[#8a7f78] hover:text-[#f5f0eb] hover:bg-[#f5f0eb]/5"
-              }`}
-            >
-              {item.label}
-              {!!item.count && item.count > 0 && (
-                <span className="h-4 w-4 rounded-full bg-[#c8622a] text-white text-[9px] flex items-center justify-center font-medium">
-                  {item.count}
-                </span>
-              )}
-            </Link>
-          ))}
-        </div>
-      </div>
-    </nav>
-  )
-}
 
 // ─── Cart Item Card ───────────────────────────────────────────────────────────
 
@@ -130,7 +86,13 @@ const discounted = product.discountPercentage
           {/* Qty stepper */}
           <div className="flex items-center border border-[#e8e3dd] rounded-xl overflow-hidden bg-[#faf7f3]">
             <button
-              onClick={() => updateQuantity(item.productId, Math.max(1, quantity - 1))}
+             onClick={() => {
+  if (quantity === 1) {
+    removeItem(item.productId)
+  } else {
+    updateQuantity(item.productId, quantity - 1)
+  }
+}}
               className="h-8 w-8 flex items-center justify-center text-[#8a7f78] hover:text-[#0a0a0f] hover:bg-[#e8e3dd] transition-colors"
             >
               <Minus size={12} />
@@ -200,6 +162,8 @@ const discounted = product.discountPercentage
 // ─── Cart Summary ─────────────────────────────────────────────────────────────
 
 function CartSummary({ items }: { items: any[] }) {
+
+  const router = useRouter()
  const subtotal = items.reduce((sum, item) => {
 
   if (!item.product) return sum
@@ -270,14 +234,15 @@ function CartSummary({ items }: { items: any[] }) {
         </span>
       </div>
 
-      <Button
-        className="w-full h-12 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm font-medium tracking-wide
-          hover:bg-[#c8622a] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#c8622a]/30
-          active:translate-y-0 transition-all duration-200 group gap-2"
-      >
-        Proceed to Checkout
-        <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
-      </Button>
+ <Button
+  onClick={() => router.push("/checkout")}
+  className="w-full h-12 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm font-medium tracking-wide
+    hover:bg-[#c8622a] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#c8622a]/30
+    active:translate-y-0 transition-all duration-200 group gap-2"
+>
+  Proceed to Checkout
+  <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+</Button>
 
       <Link href="/explore">
         <Button
