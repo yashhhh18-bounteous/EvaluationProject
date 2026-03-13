@@ -50,11 +50,11 @@ function OrderCard({ order }: { order: any }) {
   const status = statusConfig[order.status as keyof typeof statusConfig]
 
   return (
-    <div className="bg-white rounded-2xl border border-[#e8e3dd] overflow-hidden hover:border-[#c8622a]/20 hover:shadow-md hover:shadow-[#c8622a]/5 transition-all duration-300">
+    <div className="bg-white rounded-2xl border border-[#e8e3dd] overflow-hidden hover:border-[#059669]/20 hover:shadow-md hover:shadow-[#059669]/5 transition-all duration-300">
 
       {/* Order Header */}
       <div className="p-5 flex items-start gap-4">
-        <div className="h-11 w-11 rounded-xl bg-[#c8622a]/10 border border-[#c8622a]/20 flex items-center justify-center text-[#c8622a] flex-shrink-0">
+        <div className="h-11 w-11 rounded-xl bg-[#059669]/10 border border-[#059669]/20 flex items-center justify-center text-[#059669] flex-shrink-0">
           <Package size={18} />
         </div>
 
@@ -77,7 +77,7 @@ function OrderCard({ order }: { order: any }) {
 
           {/* Address snapshot */}
           <div className="flex items-start gap-1.5 mt-2">
-            <MapPin size={12} className="text-[#c8622a] mt-0.5 flex-shrink-0" />
+            <MapPin size={12} className="text-[#059669] mt-0.5 flex-shrink-0" />
             <p className="text-xs text-[#8a7f78] line-clamp-1">
               {order.addressLine1}, {order.addressCity}, {order.addressState} — {order.addressPincode}
             </p>
@@ -123,7 +123,7 @@ function OrderCard({ order }: { order: any }) {
 
           <button
             onClick={() => setExpanded((v) => !v)}
-            className="text-xs text-[#c8622a] hover:text-[#c8622a]/80 transition-colors ml-2"
+            className="text-xs text-[#059669] hover:text-[#059669]/80 transition-colors ml-2"
           >
             {expanded ? "Hide items" : "View items"}
           </button>
@@ -203,7 +203,7 @@ export default function OrdersPage() {
 
         {/* Header */}
         <div>
-          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#c8622a] mb-1">
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#059669] mb-1">
             Your
           </p>
           <h1 className="text-[clamp(28px,4vw,48px)] font-light text-[#0a0a0f]"
@@ -238,7 +238,7 @@ export default function OrdersPage() {
             </div>
             <Button
               onClick={() => router.push("/explore")}
-              className="h-11 px-8 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm hover:bg-[#c8622a] transition-all"
+              className="h-11 px-8 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm hover:bg-[#059669] transition-all"
             >
               Start Shopping
             </Button>

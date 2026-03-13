@@ -48,7 +48,7 @@ export default function PDPImageGallery({
 
         {/* Discount badge */}
         {discountPercentage > 5 && (
-          <div className="absolute top-4 left-4 bg-[#c8622a] text-white text-xs font-medium px-3 py-1 rounded-full">
+          <div className="absolute top-4 left-4 bg-[#059669] text-white text-xs font-medium px-3 py-1 rounded-full">
             -{Math.round(discountPercentage)}% OFF
           </div>
         )}
@@ -58,8 +58,8 @@ export default function PDPImageGallery({
           onClick={()=>setWished(w=>!w)}
           className={`absolute top-4 right-4 h-10 w-10 rounded-full flex items-center justify-center transition-all duration-200 shadow-md ${
             wished
-              ? "bg-[#c8622a] text-white"
-              : "bg-white text-[#8a7f78] hover:text-[#c8622a]"
+              ? "bg-[#059669] text-white"
+              : "bg-white text-[#8a7f78] hover:text-[#059669]"
           }`}
         >
           <Heart size={16} fill={wished ? "currentColor":"none"} />
@@ -83,8 +83,8 @@ export default function PDPImageGallery({
                 onClick={()=>setActiveImage(index)}
                 className={`flex-shrink-0 h-20 w-20 rounded-xl border-2 overflow-hidden transition-all duration-200 ${
                   activeImage === index
-                    ? "border-[#c8622a] shadow-md shadow-[#c8622a]/20"
-                    : "border-[#e8e3dd] hover:border-[#c8622a]/40"
+                    ? "border-[#059669] shadow-md shadow-[#059669]/20"
+                    : "border-[#e8e3dd] hover:border-[#059669]/40"
                 }`}
               >
                 <img

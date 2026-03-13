@@ -62,14 +62,14 @@ function Navbar() {
     <nav className="sticky top-0 z-50 bg-[#0a0a0f]/95 backdrop-blur-md border-b border-[#8a7f78]/10">
       <div className="flex items-center gap-4 px-6 py-3.5 max-w-[1200px] mx-auto">
         <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#c8622a]/60 text-[#c8622a]">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#059669]/60 text-[#059669]">
             <ShoppingBag size={15} />
           </div>
           <span
             className="text-xl tracking-[0.14em] text-[#f5f0eb]"
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}
           >
-            Yash<span className="text-[#c8622a]">Cart</span>
+            Yash<span className="text-[#059669]">Cart</span>
           </span>
         </Link>
 
@@ -95,7 +95,7 @@ function Navbar() {
           <Link href="/cart">
             <Button
               size="sm"
-              className="rounded-xl bg-[#c8622a] text-white hover:bg-[#e8845a] border-0 text-xs font-medium gap-1.5"
+              className="rounded-xl bg-[#059669] text-white hover:bg-[#e8845a] border-0 text-xs font-medium gap-1.5"
             >
               <ShoppingCart size={13} />
               Cart
@@ -145,7 +145,7 @@ function StarRow({ rating, size = 14 }: { rating: number; size?: number }) {
           size={size}
           className={
             s <= Math.round(rating)
-              ? "text-[#c8622a] fill-[#c8622a]"
+              ? "text-[#059669] fill-[#059669]"
               : "text-[#e8e3dd] fill-[#e8e3dd]"
           }
         />
@@ -167,7 +167,7 @@ function ReviewCard({ review }: { review: Review }) {
     <div className="bg-white rounded-2xl p-5 border border-[#e8e3dd] space-y-3">
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="h-9 w-9 rounded-full bg-[#c8622a]/10 border border-[#c8622a]/20 flex items-center justify-center text-[#c8622a]">
+          <div className="h-9 w-9 rounded-full bg-[#059669]/10 border border-[#059669]/20 flex items-center justify-center text-[#059669]">
             <User size={15} />
           </div>
           <div>
@@ -197,7 +197,7 @@ function InfoPill({
 }) {
   return (
     <div className="flex items-start gap-3 p-4 bg-white rounded-xl border border-[#e8e3dd]">
-      <div className="mt-0.5 text-[#c8622a] flex-shrink-0">{icon}</div>
+      <div className="mt-0.5 text-[#059669] flex-shrink-0">{icon}</div>
       <div>
         <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#8a7f78]">{label}</p>
         <p className="text-[13px] font-light text-[#0a0a0f] mt-0.5">{value}</p>
@@ -270,7 +270,7 @@ export default function ProductDetailPage() {
             Product not found
           </p>
           <Link href="/explore">
-            <Button variant="outline" className="rounded-xl border-[#e8e3dd] text-[#0a0a0f] hover:bg-[#c8622a] hover:text-white hover:border-[#c8622a] transition-all">
+            <Button variant="outline" className="rounded-xl border-[#e8e3dd] text-[#0a0a0f] hover:bg-[#059669] hover:text-white hover:border-[#059669] transition-all">
               Back to Explore
             </Button>
           </Link>
@@ -296,7 +296,7 @@ export default function ProductDetailPage() {
 
                 {/* Discount badge */}
                 {product.discountPercentage > 5 && (
-                  <div className="absolute top-4 left-4 bg-[#c8622a] text-white text-xs font-medium px-3 py-1 rounded-full">
+                  <div className="absolute top-4 left-4 bg-[#059669] text-white text-xs font-medium px-3 py-1 rounded-full">
                     -{Math.round(product.discountPercentage)}% OFF
                   </div>
                 )}
@@ -306,8 +306,8 @@ export default function ProductDetailPage() {
                   onClick={() => setWished((w) => !w)}
                   className={`absolute top-4 right-4 h-10 w-10 rounded-full flex items-center justify-center transition-all duration-200 shadow-md ${
                     wished
-                      ? "bg-[#c8622a] text-white"
-                      : "bg-white text-[#8a7f78] hover:text-[#c8622a]"
+                      ? "bg-[#059669] text-white"
+                      : "bg-white text-[#8a7f78] hover:text-[#059669]"
                   }`}
                 >
                   <Heart size={16} fill={wished ? "currentColor" : "none"} />
@@ -323,8 +323,8 @@ export default function ProductDetailPage() {
                       onClick={() => setActiveImage(i)}
                       className={`flex-shrink-0 h-20 w-20 rounded-xl border-2 overflow-hidden transition-all duration-200 ${
                         activeImage === i
-                          ? "border-[#c8622a] shadow-md shadow-[#c8622a]/20"
-                          : "border-[#e8e3dd] hover:border-[#c8622a]/40"
+                          ? "border-[#059669] shadow-md shadow-[#059669]/20"
+                          : "border-[#e8e3dd] hover:border-[#059669]/40"
                       }`}
                     >
                       <img
@@ -343,7 +343,7 @@ export default function ProductDetailPage() {
 
               {/* Breadcrumb */}
               <div className="flex items-center gap-1.5 text-[11px] text-[#8a7f78] font-light">
-                <Link href="/explore" className="hover:text-[#c8622a] transition-colors capitalize">
+                <Link href="/explore" className="hover:text-[#059669] transition-colors capitalize">
                   {product.category.name}
                 </Link>
                 <ChevronRight size={11} />
@@ -351,7 +351,7 @@ export default function ProductDetailPage() {
               </div>
 
               {/* Brand */}
-              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#c8622a]">
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#059669]">
                 {product.brand}
               </p>
 
@@ -398,7 +398,7 @@ export default function ProductDetailPage() {
                     <span className="text-lg font-light text-[#8a7f78] line-through">
                       ${product.price.toFixed(2)}
                     </span>
-                    <span className="text-sm font-medium text-[#c8622a]">
+                    <span className="text-sm font-medium text-[#059669]">
                       Save ${(product.price - discountedPrice).toFixed(2)}
                     </span>
                   </>
@@ -434,7 +434,7 @@ export default function ProductDetailPage() {
                 <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#0a0a0f]/50">
                   Quantity
                   {product.minimumOrderQuantity > 1 && (
-                    <span className="ml-2 normal-case tracking-normal text-[#c8622a] font-light">
+                    <span className="ml-2 normal-case tracking-normal text-[#059669] font-light">
                       (min. {product.minimumOrderQuantity})
                     </span>
                   )}
@@ -470,7 +470,7 @@ export default function ProductDetailPage() {
                   <Button
                     onClick={handleAddToCart}
                     className="flex-1 h-12 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm font-medium tracking-wide
-                      hover:bg-[#c8622a] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#c8622a]/30
+                      hover:bg-[#059669] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#059669]/30
                       active:translate-y-0 transition-all duration-200 group gap-2"
                   >
                     {addedToCart ? (
@@ -488,8 +488,8 @@ export default function ProductDetailPage() {
                     variant="outline"
                     className={`h-12 w-12 rounded-xl border transition-all duration-200 flex-shrink-0 ${
                       wished
-                        ? "bg-[#c8622a] border-[#c8622a] text-white"
-                        : "border-[#e8e3dd] text-[#8a7f78] hover:border-[#c8622a] hover:text-[#c8622a]"
+                        ? "bg-[#059669] border-[#059669] text-white"
+                        : "border-[#e8e3dd] text-[#8a7f78] hover:border-[#059669] hover:text-[#059669]"
                     }`}
                   >
                     <Heart size={16} fill={wished ? "currentColor" : "none"} />
@@ -511,7 +511,7 @@ export default function ProductDetailPage() {
           <div className="space-y-6">
             <div className="flex items-end justify-between">
               <div>
-                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#c8622a] mb-1">
+                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[#059669] mb-1">
                   Customer Reviews
                 </p>
                 <h2

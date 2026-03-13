@@ -53,14 +53,14 @@ return ( <nav className="sticky top-0 z-50 bg-[#0a0a0f]/95 backdrop-blur-md bord
 ```
     {/* Brand */}
     <Link href="/explore" className="flex items-center gap-2.5 flex-shrink-0">
-      <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#c8622a]/60 text-[#c8622a]">
+      <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#059669]/60 text-[#059669]">
         <ShoppingBag size={15} />
       </div>
       <span
         className="text-xl tracking-[0.14em] text-[#f5f0eb]"
         style={{ fontFamily: "'Bebas Neue', sans-serif" }}
       >
-        Yash<span className="text-[#c8622a]">Cart</span>
+        Yash<span className="text-[#059669]">Cart</span>
       </span>
     </Link>
 
@@ -72,7 +72,7 @@ return ( <nav className="sticky top-0 z-50 bg-[#0a0a0f]/95 backdrop-blur-md bord
           placeholder="Search products, brands…"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="pl-10 h-10 rounded-xl bg-[#1a1a22] border-[#8a7f78]/20 text-[#f5f0eb] text-sm font-light placeholder:text-[#8a7f78]/50 focus-visible:border-[#c8622a]/60 focus-visible:ring-[#c8622a]/10 focus-visible:ring-2"
+          className="pl-10 h-10 rounded-xl bg-[#1a1a22] border-[#8a7f78]/20 text-[#f5f0eb] text-sm font-light placeholder:text-[#8a7f78]/50 focus-visible:border-[#059669]/60 focus-visible:ring-[#059669]/10 focus-visible:ring-2"
         />
       </div>
     )}
@@ -90,14 +90,14 @@ return ( <nav className="sticky top-0 z-50 bg-[#0a0a0f]/95 backdrop-blur-md bord
           href={item.href}
           className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-light transition-colors ${
             item.active
-              ? "text-[#c8622a] bg-[#c8622a]/10"
+              ? "text-[#059669] bg-[#059669]/10"
               : "text-[#8a7f78] hover:text-[#f5f0eb] hover:bg-[#f5f0eb]/5"
           }`}
         >
           {item.icon}
           {item.label}
           {"count" in item && item.count !== undefined && item.count > 0 && (
-            <span className="ml-1 text-[10px] bg-[#c8622a] text-white px-1.5 py-[1px] rounded-full">
+            <span className="ml-1 text-[10px] bg-[#059669] text-white px-1.5 py-[1px] rounded-full">
               {item.count}
             </span>
           )}
@@ -110,7 +110,7 @@ return ( <nav className="sticky top-0 z-50 bg-[#0a0a0f]/95 backdrop-blur-md bord
           onClick={() => setOpen((o) => !o)}
           className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-[#f5f0eb]/5 transition-colors"
         >
-          <div className="h-8 w-8 rounded-full bg-[#c8622a]/20 border border-[#c8622a]/30 flex items-center justify-center text-[#c8622a] text-xs font-medium">
+          <div className="h-8 w-8 rounded-full bg-[#059669]/20 border border-[#059669]/30 flex items-center justify-center text-[#059669] text-xs font-medium">
             {getInitials(user?.name, user?.email)}
           </div>
           <ChevronDown size={13} className={`text-[#8a7f78] transition-transform ${open ? "rotate-180" : ""}`} />
