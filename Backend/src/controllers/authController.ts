@@ -175,41 +175,70 @@ res.cookie("accessToken", newAccessToken, {
 }
 
 
-export const logout = async (req: Request, res: Response) => {
-
+export const logout = async (req: AuthRequest, res: Response) => {
   const token = req.cookies.refreshToken
 
   if (token) {
-
     const tokens = await prisma.refreshToken.findMany()
-
     for (const t of tokens) {
       const valid = await bcrypt.compare(token, t.tokenHash)
-
       if (valid) {
-        await prisma.refreshToken.delete({
-          where: { id: t.id }
-        })
+        await prisma.refreshToken.delete({ where: { id: t.id } })
       }
     }
-
   }
 
-  res.clearCookie("refreshToken")
-res.clearCookie("accessToken")
+  const isProd = process.env.NODE_ENV === "production"
+
+  const cookieOptions = {
+    httpOnly: true,
+    secure: isProd,
+    sameSite: isProd ? "none" as const : "lax" as const,
+  }
+
+  res.clearCookie("accessToken", cookieOptions)
+  res.clearCookie("refreshToken", cookieOptions)
 
   res.json({ message: "Logged out" })
 }
 
 export const me = async (req: AuthRequest, res: Response) => {
   try {
-
     const user = await prisma.user.findUnique({
       where: { id: req.userId },
       select: {
         id: true,
         email: true,
         name: true,
+        phone: true,        // ← ADD
+        createdAt: true,
+        addresses: {        // ← ADD
+          orderBy: [{ isDefault: "desc" }, { createdAt: "desc" }]
+        }
+      }
+    })
+
+    res.json(user)
+
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+}
+
+// UPDATE PROFILE
+export const updateProfile = async (req: AuthRequest, res: Response) => {
+  try {
+    const { name, phone } = req.body
+
+    const user = await prisma.user.update({
+      where: { id: req.userId },
+      data: { name, phone },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        phone: true,
         createdAt: true
       }
     })
@@ -222,3 +251,73 @@ export const me = async (req: AuthRequest, res: Response) => {
   }
 }
 
+// ADD ADDRESS
+export const addAddress = async (req: AuthRequest, res: Response) => {
+  try {
+    const { label, line1, line2, city, state, pincode, country, isDefault } = req.body
+
+    // if new address is default, unset all others first
+    if (isDefault) {
+      await prisma.address.updateMany({
+        where: { userId: req.userId },
+        data: { isDefault: false }
+      })
+    }
+
+    const address = await prisma.address.create({
+      data: {
+        userId: req.userId!,
+        label, line1, line2,
+        city, state, pincode,
+        country: country ?? "India",
+        isDefault: isDefault ?? false
+      }
+    })
+
+    res.json(address)
+
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+}
+
+// GET ADDRESSES
+export const getAddresses = async (req: AuthRequest, res: Response) => {
+  try {
+    const addresses = await prisma.address.findMany({
+      where: { userId: req.userId },
+      orderBy: [{ isDefault: "desc" }, { createdAt: "desc" }]
+    })
+
+    res.json(addresses)
+
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+}
+
+// DELETE ADDRESS
+export const deleteAddress = async (req: AuthRequest, res: Response) => {
+  try {
+    const { id } = req.params
+
+    // make sure address belongs to this user
+    const address = await prisma.address.findFirst({
+      where: { id: Number(id), userId: req.userId }
+    })
+
+    if (!address) {
+      return res.status(404).json({ message: "Address not found" })
+    }
+
+    await prisma.address.delete({ where: { id: Number(id) } })
+
+    res.json({ message: "Address deleted" })
+
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+}

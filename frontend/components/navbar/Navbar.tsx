@@ -1,18 +1,48 @@
 "use client"
 
 import Link from "next/link"
-
-import { ShoppingBag, Search, Heart, ShoppingCart, Package, User } from "lucide-react"
-
+import { useRouter } from "next/navigation"
+import { ShoppingBag, Search, Heart, ShoppingCart, Package, User, LogOut, UserCircle, ChevronDown } from "lucide-react"
 import { Input } from "@/components/ui/input"
-
 import { useCartStore } from "@/store/cartStore"
 import { useWishlistStore } from "@/store/wishlistStore"
+import { useAuthStore } from "@/store/authStore"
+import { api } from "@/lib/api"
+import { useState, useRef, useEffect } from "react"
+
+function getInitials(name?: string, email?: string) {
+  if (name) return name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2)
+  if (email) return email[0].toUpperCase()
+  return "?"
+}
 
 export default function Navbar({ search, setSearch }: { search: string; setSearch: (v: string) => void }) {
-
   const cartCount = useCartStore((s) => s.cartCount)
   const wishlistCount = useWishlistStore((s) => s.wishlistCount)
+  const user = useAuthStore((s) => s.user)
+  const router = useRouter()
+
+  const [open, setOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  // close on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handler)
+    return () => document.removeEventListener("mousedown", handler)
+  }, [])
+
+  const handleLogout = async () => {
+    try {
+      await api.post("/auth/logout")
+    } catch {}
+    useAuthStore.setState({ user: null, initialized: false })
+    router.push("/login")
+  }
 
   return (
     <nav className="sticky top-0 z-50 bg-[#0a0a0f]/95 backdrop-blur-md border-b border-[#8a7f78]/10">
@@ -61,7 +91,6 @@ export default function Navbar({ search, setSearch }: { search: string; setSearc
             >
               {item.icon}
               {item.label}
-
               {"count" in item && item.count !== undefined && item.count > 0 && (
                 <span className="ml-1 text-[10px] bg-[#c8622a] text-white px-1.5 py-[1px] rounded-full">
                   {item.count}
@@ -70,8 +99,51 @@ export default function Navbar({ search, setSearch }: { search: string; setSearc
             </Link>
           ))}
 
-          <div className="ml-2 h-8 w-8 rounded-full bg-[#c8622a]/20 border border-[#c8622a]/30 flex items-center justify-center text-[#c8622a]">
-            <User size={14} />
+          {/* Profile Dropdown */}
+          <div className="relative ml-2" ref={dropdownRef}>
+            <button
+              onClick={() => setOpen((o) => !o)}
+              className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-[#f5f0eb]/5 transition-colors"
+            >
+              <div className="h-8 w-8 rounded-full bg-[#c8622a]/20 border border-[#c8622a]/30 flex items-center justify-center text-[#c8622a] text-xs font-medium">
+                {getInitials(user?.name, user?.email)}
+              </div>
+              <ChevronDown size={13} className={`text-[#8a7f78] transition-transform ${open ? "rotate-180" : ""}`} />
+            </button>
+
+            {open && (
+              <div className="absolute right-0 mt-2 w-56 rounded-xl bg-[#0a0a0f] border border-[#8a7f78]/15 shadow-xl overflow-hidden z-50">
+                
+                {/* User info */}
+                <div className="px-4 py-3 border-b border-[#8a7f78]/10">
+                  <p className="text-sm font-medium text-[#f5f0eb] truncate">
+                    {user?.name ?? "User"}
+                  </p>
+                  <p className="text-xs text-[#8a7f78] truncate mt-0.5">
+                    {user?.email}
+                  </p>
+                </div>
+
+                {/* Actions */}
+                <div className="p-1.5 space-y-0.5">
+                  <button
+                    onClick={() => { setOpen(false); router.push("/profile") }}
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-[#8a7f78] hover:text-[#f5f0eb] hover:bg-[#f5f0eb]/5 transition-colors"
+                  >
+                    <UserCircle size={15} />
+                    Edit Profile
+                  </button>
+
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors"
+                  >
+                    <LogOut size={15} />
+                    Logout
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
