@@ -23,7 +23,7 @@ export default function HeroCarousel({ items }: { items: CarouselItem[] }) {
 
       {/* BG image */}
       <div
-        className="absolute inset-0 bg-cover bg-center transition-all duration-700"
+        className="absolute inset-0 bg-cover bg-center transition-all duration-700 will-change-transform"
         style={{ backgroundImage: `url(${item.imageUrl})` }}
       />
 
