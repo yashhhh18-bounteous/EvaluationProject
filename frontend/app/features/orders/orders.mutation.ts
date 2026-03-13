@@ -1,16 +1,22 @@
-// features/orders/orders.mutations.ts
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { placeOrder, fetchOrders, fetchOrderById } from "./orders.api"
+import {
+  createCheckoutSession,
+  verifySession,
+  fetchOrders,
+  fetchOrderById
+} from "./orders.api"
 
-export function usePlaceOrder() {
-  const queryClient = useQueryClient()
-
+export function useCreateCheckoutSession() {
   return useMutation({
-    mutationFn: (addressId: number) => placeOrder(addressId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["orders"] })
-      queryClient.invalidateQueries({ queryKey: ["cart"] })
-    }
+    mutationFn: (addressId: number) => createCheckoutSession(addressId)
+  })
+}
+
+export function useVerifySession(sessionId: string) {
+  return useQuery({
+    queryKey: ["session", sessionId],
+    queryFn: () => verifySession(sessionId),
+    enabled: !!sessionId
   })
 }
 

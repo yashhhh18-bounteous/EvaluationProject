@@ -4,7 +4,8 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useAuthStore } from "@/store/authStore"
 import { useCartStore } from "@/store/cartStore"
-import { usePlaceOrder } from "../../features/orders/orders.mutation"
+import { useCreateCheckoutSession } from "../../features/orders/orders.mutation"
+
 import Navbar from "@/components/navbar/Navbar"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -62,7 +63,7 @@ export default function CheckoutPage() {
   const [addressForm, setAddressForm] = useState<AddressForm>(emptyAddress)
   const [savingAddress, setSavingAddress] = useState(false)
 
-  const placeOrderMutation = usePlaceOrder()
+ const checkoutMutation = useCreateCheckoutSession()
 
   // totals
   const subtotal = items.reduce((sum, item) => {
@@ -99,26 +100,25 @@ export default function CheckoutPage() {
   }
 
   const handlePlaceOrder = async () => {
-    if (!selectedAddressId) {
-      toast.error("Please select a delivery address")
-      return
-    }
-    if (items.length === 0) {
-      toast.error("Your cart is empty")
-      return
-    }
-
-    placeOrderMutation.mutate(selectedAddressId, {
-      onSuccess: async () => {
-        await fetchCart()
-        toast.success("Order placed successfully!")
-        router.push("/orders")
-      },
-      onError: () => {
-        toast.error("Failed to place order")
-      }
-    })
+  if (!selectedAddressId) {
+    toast.error("Please select a delivery address")
+    return
   }
+  if (items.length === 0) {
+    toast.error("Your cart is empty")
+    return
+  }
+
+  checkoutMutation.mutate(selectedAddressId, {
+    onSuccess: (data) => {
+      // redirect to Stripe hosted checkout
+      window.location.href = data.url
+    },
+    onError: () => {
+      toast.error("Failed to initiate payment")
+    }
+  })
+}
 
   if (items.length === 0) {
     return (
@@ -410,23 +410,23 @@ export default function CheckoutPage() {
               Estimated delivery in 3–5 business days
             </div>
 
-            <Button
-              onClick={handlePlaceOrder}
-              disabled={placeOrderMutation.isPending || !selectedAddressId}
-              className="w-full h-12 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm font-medium tracking-wide
-                hover:bg-[#c8622a] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#c8622a]/30
-                active:translate-y-0 transition-all duration-200 group gap-2 disabled:opacity-50"
-            >
-              {placeOrderMutation.isPending ? (
-                "Placing Order..."
-              ) : (
-                <>
-                  <CheckCircle2 size={15} />
-                  Place Order
-                  <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
-                </>
-              )}
-            </Button>
+           <Button
+  onClick={handlePlaceOrder}
+  disabled={checkoutMutation.isPending || !selectedAddressId}
+  className="w-full h-12 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] text-sm font-medium tracking-wide
+    hover:bg-[#c8622a] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#c8622a]/30
+    active:translate-y-0 transition-all duration-200 group gap-2 disabled:opacity-50"
+>
+  {checkoutMutation.isPending ? (
+    "Redirecting to payment..."
+  ) : (
+    <>
+      <CheckCircle2 size={15} />
+      Pay Now
+      <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+    </>
+  )}
+</Button>
           </div>
         </div>
       </div>
