@@ -190,6 +190,9 @@ model Order {
   user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   items     OrderItem[]
+   stripeSessionId       String?  
+  stripePaymentIntentId String?  
+  paymentStatus         String   @default("unpaid")
 
   // snapshot the address at time of order
   addressLine1  String

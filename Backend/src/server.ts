@@ -8,10 +8,20 @@ import carouselRoutes from "./routes/carouselRoutes"
 import cartRoutes from "./routes/cartRoutes"
 import wishlistRoutes from "./routes/wishlistRoutes"
 import orderRoutes from "./routes/orderRoutes"
+import paymentRoutes from "./routes/paymentRoutes"
 
 
 
 const app = express()
+
+
+app.use("/api/payments/webhook",
+  express.raw({ type: "application/json" }),
+  (req, res, next) => {
+    // pass to router
+    next()
+  }
+)
 
 app.use(express.json())
 app.use(cookieParser())
@@ -32,7 +42,7 @@ app.use("/carousel", carouselRoutes)
 app.use("/api/cart", cartRoutes)
 app.use("/api/wishlist", wishlistRoutes)
 app.use("/api/orders", orderRoutes)
-
+app.use("/api/payments", paymentRoutes)
 
 
 
