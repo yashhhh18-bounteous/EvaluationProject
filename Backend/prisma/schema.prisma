@@ -13,15 +13,35 @@ datasource db {
 }
 
 model User {
-  id            Int            @id @default(autoincrement())
-  email         String         @unique
-  passwordHash  String
-  name          String?
-  createdAt     DateTime       @default(now())
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  passwordHash String
+  name         String?
+  phone        String?   
+  createdAt    DateTime  @default(now())
+
   cart          Cart?
   wishlistItems WishlistItem[]
-
   refreshTokens RefreshToken[]
+  addresses     Address[]      // ← ADD
+}
+
+model Address {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  label     String?  // "Home", "Work"
+  line1     String
+  line2     String?
+  city      String
+  state     String
+  pincode   String
+  country   String   @default("India")
+  isDefault Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model RefreshToken {
