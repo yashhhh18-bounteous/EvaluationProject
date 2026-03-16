@@ -155,8 +155,8 @@ export const refresh = async (req: Request, res: Response) => {
 res.cookie("refreshToken", newRefreshToken, {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
-  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // ← fix sameSite too
-  maxAge: 7 * 24 * 60 * 60 * 1000  // ← ADD THIS
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", 
+  maxAge: 7 * 24 * 60 * 60 * 1000  
 })
 
 res.cookie("accessToken", newAccessToken, {
@@ -179,7 +179,9 @@ export const logout = async (req: AuthRequest, res: Response) => {
   const token = req.cookies.refreshToken
 
   if (token) {
-    const tokens = await prisma.refreshToken.findMany()
+    const tokens = await prisma.refreshToken.findMany({
+      where: {userId:req.userId}
+    })
     for (const t of tokens) {
       const valid = await bcrypt.compare(token, t.tokenHash)
       if (valid) {

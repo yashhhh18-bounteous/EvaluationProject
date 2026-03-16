@@ -1,21 +1,29 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { Heart, ShoppingCart, Star } from "lucide-react"
 
 import { Product } from "@/types/product"
 
 import { useCartStore } from "@/store/cartStore"
 import { useWishlistStore } from "@/store/wishlistStore"
+import { useAuthStore } from "@/store/authStore"
+import router from "next/router"
 
 export default function ProductCard({ product, index }: { product: Product; index: number }) {
 
   const addToCart = useCartStore((s) => s.addToCart)
-  const toggleWishlist = useWishlistStore((s) => s.toggleWishlist)
+  const user =useAuthStore((s)=>s.user)
 
-  // ✅ Select `items` (the actual array in your store) so Zustand re-renders
-  // the card whenever the array reference changes on toggle.
-  // isWishlisted uses get() internally — stable function ref, no re-render.
+  const handleAddtoCart=()=>{
+    if(!user){
+      router.push("/login")
+      return 
+    }
+    addToCart
+  }
+  const toggleWishlist = useWishlistStore((s) => s.toggleWishlist)
   const items = useWishlistStore((s) => s.items)
   const wished = items.some((i) => i.productId === product.id)
 
@@ -25,21 +33,24 @@ export default function ProductCard({ product, index }: { product: Product; inde
 
   return (
     <div
-      className="group relative bg-white rounded-2xl overflow-hidden border border-[#e8e3dd] hover:border-[#059669]/30 hover:shadow-xl hover:shadow-[#059669]/8 transition-all duration-300 hover:-translate-y-1 animate-in fade-in slide-in-from-bottom-2"
+      className="group relative bg-white rounded-2xl overflow-hidden border border-[#e8e3dd] hover:border-[#059669]/30 hover:shadow-xl hover:shadow-[#059669]/8 transition-all duration-300 hover:-translate-y-1 will-change-transform animate-in fade-in slide-in-from-bottom-2"
       style={{ animationDelay: `${(index % 12) * 40}ms` }}
     >
       {/* Image */}
       <div className="relative aspect-square bg-[#faf7f3] overflow-hidden">
-        <Link href={`/products/${product.id}`} className="block w-full h-full">
-          <img
+        <Link href={`/products/${product.id}`} className="block w-full h-full relative">
+          <Image
             src={product.thumbnail}
             alt={product.title}
-            className="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+            fill
+            sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
+            className="object-contain p-4 transition-transform duration-500 group-hover:scale-105 will-change-transform"
           />
         </Link>
 
         {/* Wishlist button */}
         <button
+          aria-label={wished ? "Remove from wishlist" : "Add to wishlist"}
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()
@@ -50,11 +61,9 @@ export default function ProductCard({ product, index }: { product: Product; inde
             "h-8 w-8 rounded-full",
             "flex items-center justify-center",
             "transition-all duration-200 active:scale-75",
-            // color — wished vs not wished
             wished
               ? "bg-[#059669] text-white shadow-lg shadow-[#059669]/30"
               : "bg-white/80 text-[#8a7f78] hover:bg-white hover:text-[#059669]",
-            // visibility — kept separate so Tailwind doesn't conflict
             wished
               ? "opacity-100 scale-100"
               : "opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100",
@@ -127,13 +136,14 @@ export default function ProductCard({ product, index }: { product: Product; inde
           </div>
 
           <button
+            aria-label="Add to cart"
             onClick={(e) => {
               e.preventDefault()
               e.stopPropagation()
               addToCart(product.id)
             }}
             className="h-8 w-8 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] flex items-center justify-center
-              hover:bg-[#059669] active:scale-90 transition-all duration-200"
+              hover:bg-[#059669] active:scale-90 transition-all duration-200 will-change-transform"
           >
             <ShoppingCart size={13} />
           </button>
