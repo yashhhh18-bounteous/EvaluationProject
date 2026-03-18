@@ -85,20 +85,22 @@ const discounted = product.discountPercentage
 
           {/* Qty stepper */}
           <div className="flex items-center border border-[#e8e3dd] rounded-xl overflow-hidden bg-[#faf7f3]">
-            <button
+            <button  disabled={quantity === 1 }
              onClick={() => {
-  if (quantity === 1) {
+        if (quantity === 1) {
     removeItem(item.productId)
+    
   } else {
     updateQuantity(item.productId, quantity - 1)
   }
-}}
+           }}
               className="h-8 w-8 flex items-center justify-center text-[#8a7f78] hover:text-[#0a0a0f] hover:bg-[#e8e3dd] transition-colors"
             >
               <Minus size={12} />
             </button>
             <span className="w-8 text-center text-sm font-light text-[#0a0a0f]">
               {quantity}
+              
             </span>
             <button
               onClick={() => updateQuantity(item.productId, quantity + 1)}
