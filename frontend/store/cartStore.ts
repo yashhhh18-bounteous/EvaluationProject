@@ -76,14 +76,39 @@ addToCart: async (productId: number) => {
   }
 },
 
-  updateQuantity: async (productId: number, quantity: number) => {
-    await updateCart(productId, quantity)
-    await get().fetchCart()
-  },
+updateQuantity: async (productId: number, quantity: number) => {
+  
+  const optimistic = get().items.map(i =>
+    i.productId === productId ? { ...i, quantity } : i
+  )
+  set({
+    items: optimistic,
+    cartCount: optimistic.reduce((s, i) => s + i.quantity, 0),
+  })
 
-  removeItem: async (productId: number) => {
+  try {
+    await updateCart(productId, quantity)
+    await get().fetchCart() // background resync
+  } catch (err) {
+    console.error("Cart update failed", err)
+    await get().fetchCart() // rollback via resync on error
+  }
+},
+
+removeItem: async (productId: number) => {
+  // Optimistic update — remove immediately
+  const optimistic = get().items.filter(i => i.productId !== productId)
+  set({
+    items: optimistic,
+    cartCount: optimistic.reduce((s, i) => s + i.quantity, 0),
+  })
+
+  try {
     await removeCartItem(productId)
-    await get().fetchCart()
+    await get().fetchCart() // background resync
+  } catch (err) {
+    console.error("Cart remove failed", err)
+    await get().fetchCart() // rollback on error
   }
 }))
 
