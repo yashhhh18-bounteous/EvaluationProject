@@ -13,7 +13,7 @@ import { Search, Loader2, X } from "lucide-react";
 import { buildParams } from "@/lib/utils/buildParams";
 
 import { api } from "@/lib/api";
-import { useAuthGuard } from "@/lib/useAuthGuard";
+
 
 
 interface Product {
@@ -57,7 +57,7 @@ interface FilterState {
 
 export default function ExplorePage() {
 
-  useAuthGuard()
+
 
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");

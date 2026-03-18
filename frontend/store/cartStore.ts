@@ -110,4 +110,6 @@ removeItem: async (productId: number) => {
     console.error("Cart remove failed", err)
     await get().fetchCart() // rollback on error
   }
-}}))
+}))
+
+
