@@ -86,3 +86,5 @@ addToCart: async (productId: number) => {
     await get().fetchCart()
   }
 }))
+
+
