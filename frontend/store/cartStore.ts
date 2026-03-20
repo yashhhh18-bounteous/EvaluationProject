@@ -23,92 +23,92 @@ export const useCartStore = create<CartState>((set, get) => ({
   cartCount: 0,
   loading: false,
 
-fetchCart: async () => {
-  set({ loading: true })
+  fetchCart: async () => {
+    set({ loading: true })
 
-  const cart = await getCart()
+    const cart = await getCart()
 
-  const items = cart?.items ?? []
-
-  const cartCount = items.reduce(
-    (sum: number, item: CartItem) => sum + item.quantity,
-    0
-  )
-
-  set({
-    items,
-    cartCount,
-    loading: false
-  })
-},
-
-addToCart: async (productId: number) => {
-
-  // optimistic update (fast UI)
-  const items = get().items
-  const existing = items.find(i => i.productId === productId)
-
-  let updated
-
-  if (existing) {
-    updated = items.map(i =>
-      i.productId === productId
-        ? { ...i, quantity: i.quantity + 1 }
-        : i
+    const items = (cart?.items ?? []).sort(
+      (a: CartItem, b: CartItem) => a.productId - b.productId // ✅ stable order
     )
-  } else {
-    updated = [...items, { productId, quantity: 1, product: null }]
+
+    const cartCount = items.reduce(
+      (sum: number, item: CartItem) => sum + item.quantity,
+      0
+    )
+
+    set({
+      items,
+      cartCount,
+      loading: false
+    })
+  },
+
+  addToCart: async (productId: number) => {
+    const items = get().items
+    const existing = items.find(i => i.productId === productId)
+
+    let updated
+
+    if (existing) {
+      updated = items.map(i =>
+        i.productId === productId
+          ? { ...i, quantity: i.quantity + 1 }
+          : i
+      )
+    } else {
+      updated = [...items, { productId, quantity: 1, product: null }]
+    }
+
+    // ✅ sort to match fetchCart order
+    updated = updated.sort((a, b) => a.productId - b.productId)
+
+    set({
+      items: updated,
+      cartCount: updated.reduce((s, i) => s + i.quantity, 0)
+    })
+
+    try {
+      await addToCart(productId, 1)
+      await get().fetchCart()
+    } catch (err) {
+      console.error("Cart sync failed", err)
+    }
+  },
+
+  updateQuantity: async (productId: number, quantity: number) => {
+    const optimistic = get().items.map(i =>
+      i.productId === productId ? { ...i, quantity } : i
+    )
+
+    set({
+      items: optimistic,
+      cartCount: optimistic.reduce((s, i) => s + i.quantity, 0),
+    })
+
+    try {
+      await updateCart(productId, quantity)
+      await get().fetchCart()
+    } catch (err) {
+      console.error("Cart update failed", err)
+      await get().fetchCart()
+    }
+  },
+
+  removeItem: async (productId: number) => {
+    const optimistic = get().items.filter(i => i.productId !== productId)
+
+    set({
+      items: optimistic,
+      cartCount: optimistic.reduce((s, i) => s + i.quantity, 0),
+    })
+
+    try {
+      await removeCartItem(productId)
+      await get().fetchCart()
+    } catch (err) {
+      console.error("Cart remove failed", err)
+      await get().fetchCart()
+    }
   }
-
-  set({
-    items: updated,
-    cartCount: updated.reduce((s,i)=>s+i.quantity,0)
-  })
-
-  try {
-    await addToCart(productId, 1)
-
-    // IMPORTANT: resync with backend
-    await get().fetchCart()
-
-  } catch (err) {
-    console.error("Cart sync failed", err)
-  }
-},
-
-updateQuantity: async (productId: number, quantity: number) => {
-  
-  const optimistic = get().items.map(i =>
-    i.productId === productId ? { ...i, quantity } : i
-  )
-  set({
-    items: optimistic,
-    cartCount: optimistic.reduce((s, i) => s + i.quantity, 0),
-  })
-
-  try {
-    await updateCart(productId, quantity)
-    await get().fetchCart() // background resync
-  } catch (err) {
-    console.error("Cart update failed", err)
-    await get().fetchCart() // rollback via resync on error
-  }
-},
-
-removeItem: async (productId: number) => {
-  // Optimistic update — remove immediately
-  const optimistic = get().items.filter(i => i.productId !== productId)
-  set({
-    items: optimistic,
-    cartCount: optimistic.reduce((s, i) => s + i.quantity, 0),
-  })
-
-  try {
-    await removeCartItem(productId)
-    await get().fetchCart() // background resync
-  } catch (err) {
-    console.error("Cart remove failed", err)
-    await get().fetchCart() // rollback on error
-  }}
 }))
-

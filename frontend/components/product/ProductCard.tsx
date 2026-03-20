@@ -10,22 +10,35 @@ import { useCartStore } from "@/store/cartStore"
 import { useWishlistStore } from "@/store/wishlistStore"
 import { useAuthStore } from "@/store/authStore"
 import router from "next/router"
+import { toast } from "sonner"
 
 export default function ProductCard({ product, index }: { product: Product; index: number }) {
 
   const addToCart = useCartStore((s) => s.addToCart)
   const user =useAuthStore((s)=>s.user)
 
-  const handleAddtoCart=()=>{
-    if(!user){
-      router.push("/login")
-      return 
-    }
-    addToCart
+  const handleAddToCart = () => {
+  if (!user) {
+toast.error("Please sign in to add items to cart")
+    router.push("/login")
+    return
   }
+  addToCart(product.id)
+  toast.success("Added to cart!") 
+}
   const toggleWishlist = useWishlistStore((s) => s.toggleWishlist)
   const items = useWishlistStore((s) => s.items)
   const wished = items.some((i) => i.productId === product.id)
+
+  const handleToggleWishlist = () => {
+  if (!user) {
+    toast.error("Please sign in to add items to wishlist")
+    router.push("/login")
+    return
+  }
+  toggleWishlist(product.id)
+  // toast.success(wished ? "Removed from wishlist" : "Added to wishlist!")
+}
 
   const discounted = product.discountPercentage
     ? product.price * (1 - product.discountPercentage / 100)
@@ -54,7 +67,8 @@ export default function ProductCard({ product, index }: { product: Product; inde
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()
-            toggleWishlist(product.id)
+            handleToggleWishlist()
+            
           }}
           className={[
             "absolute top-3 right-3 z-10",
@@ -140,7 +154,7 @@ export default function ProductCard({ product, index }: { product: Product; inde
             onClick={(e) => {
               e.preventDefault()
               e.stopPropagation()
-              addToCart(product.id)
+              handleAddToCart()
             }}
             className="h-8 w-8 rounded-xl bg-[#0a0a0f] text-[#f5f0eb] flex items-center justify-center
               hover:bg-[#059669] active:scale-90 transition-all duration-200 will-change-transform"

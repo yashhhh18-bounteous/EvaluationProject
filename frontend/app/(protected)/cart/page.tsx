@@ -85,7 +85,7 @@ const discounted = product.discountPercentage
 
           {/* Qty stepper */}
           <div className="flex items-center border border-[#e8e3dd] rounded-xl overflow-hidden bg-[#faf7f3]">
-            <button  disabled={quantity === 1 }
+            <button  
              onClick={() => {
         if (quantity === 1) {
     removeItem(item.productId)

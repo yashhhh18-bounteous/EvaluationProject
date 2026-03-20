@@ -12,6 +12,7 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { useAuthStore } from "@/store/authStore"
 import { loginSchema, parseErrors, type LoginErrors } from "@/lib/validations"
+import { useCartStore } from "@/store/cartStore"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -41,6 +42,7 @@ export default function LoginPage() {
       {
         onSuccess: async () => {
           await loadUser()
+          await useCartStore.getState().fetchCart()
           toast.success("Login successful")
           router.push("/explore")
         },

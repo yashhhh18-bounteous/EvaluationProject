@@ -38,3 +38,16 @@ export type LoginInput = z.infer<typeof loginSchema>
 export type SignupInput = z.infer<typeof signupSchema>
 export type LoginErrors = Partial<Record<keyof LoginInput, string>>
 export type SignupErrors = Partial<Record<keyof SignupInput, string>>
+
+export const parseErrors = <T extends Record<string, unknown>>(
+  schema: z.ZodSchema<T>,
+  data: unknown
+): Partial<Record<string, string>> => {
+  const result = schema.safeParse(data)
+  if (result.success) return {}
+  return result.error.issues.reduce((acc, issue) => {
+    const key = issue.path[0] as string
+    if (!acc[key]) acc[key] = issue.message // first error per field wins
+    return acc
+  }, {} as Record<string, string>)
+}
